@@ -38,6 +38,11 @@ class UsersController {
     }
 
     public function update(){
+        $userModel = new User();
+        $userModel -> update($_GET['id'], $_POST);
+
+        header('Location: index.php?page=users');
+
 
     }
 
