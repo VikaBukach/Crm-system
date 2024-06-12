@@ -34,7 +34,35 @@ class Router{
                     $controller->index();
                 }
                 break;
-            default:
+                case 'register':
+                $controller = new AuthController();
+                $controller->register();
+                break;
+            case 'login':
+                $controller = new AuthController();
+                $controller->login();
+                break;
+            case 'authentication':
+                $controller = new AuthController();
+                $controller->authentication();
+                break;
+            case 'logout':
+                $controller = new AuthController();
+                $controller->logout();
+                break;
+                case 'auth' :
+                $controller = new AuthController();
+                if(isset($_GET['action'])){
+                    switch ($_GET['action']) {
+                        case 'store':
+                            $controller->store();
+                            break;
+                    }
+                }else{
+                    $controller->login();
+                }
+                break;
+                default:
                 http_response_code(404);
                 echo "Page not found";
                 break;
