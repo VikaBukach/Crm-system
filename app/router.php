@@ -34,6 +34,32 @@ class Router{
                     $controller->index();
                 }
                 break;
+
+            case 'roles' :
+                $controller = new RoleController();
+                if(isset($_GET['action'])){
+                    switch ($_GET['action']) {
+                        case 'create':
+                            $controller->create();
+                            break;
+                        case 'store':
+                            $controller->store();
+                            break;
+                        case 'edit':
+                            $controller->edit($_GET['id']);
+                            break;
+                        case 'update':
+                            $controller-> update();
+                            break;
+                        case 'delete':
+                            $controller->delete();
+                            break;
+                    }
+                }else{
+                    $controller->index();
+                }
+                break;
+
                 case 'register':
                 $controller = new AuthController();
                 $controller->register();
@@ -56,6 +82,9 @@ class Router{
                     switch ($_GET['action']) {
                         case 'store':
                             $controller->store();
+                            break;
+                        case 'authentication':
+                            $controller->authentication();
                             break;
                     }
                 }else{

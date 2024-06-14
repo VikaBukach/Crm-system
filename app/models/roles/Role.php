@@ -1,13 +1,13 @@
 <?php
 
-class AuthUser{
+class Role{
     private  $db;
 
     public function __construct() {
         $this->db = Database::getInstance()->getConnection();
 
         try{
-            $result = $this-> db->query("SELECT 1 FROM `users` LIMIT 1");
+            $result = $this-> db->query("SELECT 1 FROM `roles` LIMIT 1");
         }catch(PDOException $e) {
             $this->createTable();
         }
@@ -20,76 +20,78 @@ class AuthUser{
              `role_description` TEXT
         )";
 
-        $userTableQuery = "CREATE TABLE IF NOT EXISTS `users`(
-             `id` INT(11) NOT NULL AUTO_INCREMENT,
-             `username` VARCHAR(255) NOT NULL,
-             `email` VARCHAR(255) NOT NULL,
-             `email_verification` TINYINT(1) NOT NULL DEFAULT 0,
-             `password` VARCHAR(255) NOT NULL,
-             `is_admin` TINYINT(1) NOT NULL DEFAULT 0,
-             `role` INT(11) NOT NULL DEFAULT 0,
-             `is_active` TINYINT(1) NOT NULL DEFAULT 1,
-             `last_login` TIMESTAMP NULL,
-             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-             PRIMARY KEY (`id`),
-             FOREIGN KEY (`role`) REFERENCES `roles`(`id`)
-        )";
-
         try{  //запит у БД
             $this->db->exec($roleTableQuery);
-            $this->db->exec($userTableQuery);
             return true;
         }catch(PDOException $e) {
             return false;
         }
     }
 
-    public function register($username, $email, $password) {
-        $created_at = date('Y-m-d H:i:s');
+    public function getAllRoles(){
 
-        $query = "INSERT INTO users(username, email, password,created_at) VALUES (?, ?, ?, ?)";
+        try {
+            $stmt = $this->db->query('SELECT * FROM roles');
+            $roles = [];
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+               $roles[] = $row;
+            }
+            return $roles;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function getRoleById($id){
+
+        $query = "SELECT * FROM roles WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare(($query));
+            $stmt->execute([$id]);
+            $role = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $role ? $role : false;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+
+
+    public function createRole($role_name, $role_description) {
+
+        $query = "INSERT INTO roles(role_name, role_description) VALUES (?, ?)";
 
         try {
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$username, $email, password_hash($password, PASSWORD_DEFAULT), $created_at]);
+            $stmt->execute([$role_name, $role_description]);
             return true;
         } catch (PDOException $e) {
             return false;
         }
     }
 
-    public function login($email, $password){
-
+    public function updateRole($id, $role_name, $role_description){
+        $query = "UPDATE roles SET role_name = ?, role_description = ? WHERE id = ?";
         try {
-            $query = "SELECT * FROM users WHERE email = ? LIMIT 1";
-
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$email]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->execute([$role_name, $role_description, $id]);
 
-            if ($user && password_verify($password, $user['password'])) {
-                return $user;
-            }
-
-            return false;
+            return true;
         } catch(PDOException $e) {
             return false;
         }
     }
 
-    public function findByEmail($email){
+    public function deleteRole($id){
+        $query = "DELETE FROM roles WHERE id = ?";
 
-        try {
-            $query = "SELECT * FROM users WHERE email = ? LIMIT 1";
-
+        try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$email]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            return $user ? $user : false;
-        } catch(PDOException $e) {
-            return false;
-        }
+            $stmt->execute(['$id']);
+            return true;
+        } catch(PDOException $e) {}
+        return false;
     }
 }
 

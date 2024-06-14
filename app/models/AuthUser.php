@@ -51,7 +51,7 @@ class AuthUser{
 
         try {
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$username, $email, $password, $created_at]);
+            $stmt->execute([$username, $email, password_hash($password, PASSWORD_DEFAULT), $created_at]);
             return true;
         } catch (PDOException $e) {
             return false;
