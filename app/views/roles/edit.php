@@ -4,8 +4,6 @@ $title = 'Edit Role';
 ob_start();
 ?>
 
-
-
 <div class="row justify-content-center mt-5">
     <div class="col-lg-6 col-md-8 col-sm-10">
         <h1 class="text-center mb-4">Edit role</h1>

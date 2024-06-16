@@ -8,10 +8,13 @@
 </head>
 <body>
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.php">Сrm_for_telegram</a>
+    <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="index.php">Mini CRM</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=pages">Home</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="index.php?page=users">Users</a>
                 </li>

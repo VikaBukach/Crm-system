@@ -1,5 +1,6 @@
 <?php
 require_once 'app/models/User.php';
+require_once 'app/models/roles/Role.php';
 
 class UsersController {
     public function index() {
@@ -24,11 +25,13 @@ class UsersController {
             }
 
              $userModel = new User();
+             $config = require_once __DIR__.'/../../../config.php';
              $data = [
                  'username'=> $_POST['username'],
                  'email'=> $_POST['email'],
                  'password'=> $password,
                  'role'=> 1,
+//                 'role'=> $config['start_role'],
             ];
              $userModel->create($data);
         }
@@ -38,6 +41,9 @@ class UsersController {
     public function edit(){
         $userModel = new User();
         $user = $userModel->read($_GET['id']);
+
+        $roleModel = new Role();
+        $roles = $roleModel->getAllRoles();
 
         include 'app/views/users/edit.php';
     }
