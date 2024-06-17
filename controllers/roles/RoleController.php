@@ -1,20 +1,28 @@
 <?php
+
+namespace controllers\roles;
+use controllers\models\roles\Role;
+
 require_once 'app/models/roles/Role.php';
 
-class RoleController {
-    public function index() {
+class RoleController
+{
+    public function index()
+    {
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
 
         include 'app/views/roles/index.php';
     }
 
-    public function create() {
+    public function create()
+    {
         include 'app/views/roles/create.php';
     }
 
-    public function store() {
-        if(isset($_POST['role_name']) && isset($_POST['role_description'])){
+    public function store()
+    {
+        if (isset($_POST['role_name']) && isset($_POST['role_description'])) {
             $role_name = trim($_POST['role_name']);
             $role_description = trim($_POST['role_description']);
 
@@ -29,11 +37,12 @@ class RoleController {
         header("Location: index.php?page=roles");
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $roleModel = new Role();
         $role = $roleModel->getRoleById($_GET['id']);
 
-        if(!$role) {
+        if (!$role) {
             echo "Role not found";
             return;
         }
@@ -41,8 +50,9 @@ class RoleController {
         include 'app/views/roles/edit.php';
     }
 
-    public function update(){
-        if(isset($_POST['id']) && isset($_POST['role_name']) && isset($_POST['role_description'])){
+    public function update()
+    {
+        if (isset($_POST['id']) && isset($_POST['role_name']) && isset($_POST['role_description'])) {
             $id = trim($_POST['id']);
             $role_name = trim($_POST['role_name']);
             $role_description = trim($_POST['role_description']);
@@ -58,7 +68,8 @@ class RoleController {
         header('Location: index.php?page=roles');
     }
 
-    public function delete(){
+    public function delete()
+    {
         $roleModel = new Role();
         $roleModel->deleteRole($_GET['id']);
 

@@ -1,20 +1,29 @@
 <?php
+
+namespace controllers\pages;
+
+use controllers\models\pages\PageModel;
+
 require_once 'app/models/pages/PageModel.php';
 
-class PageController {
-    public function index() {
+class PageController
+{
+    public function index()
+    {
         $pageModel = new PageModel();
         $pages = $pageModel->getAllPages();
 
         include 'app/views/pages/index.php';
     }
 
-    public function create() {
+    public function create()
+    {
         include 'app/views/pages/create.php';
     }
 
-    public function store() {
-        if(isset($_POST['title']) && isset($_POST['slug'])){
+    public function store()
+    {
+        if (isset($_POST['title']) && isset($_POST['slug'])) {
             $title = trim($_POST['title']);
             $slug = trim($_POST['slug']);
 
@@ -29,11 +38,12 @@ class PageController {
         header("Location: index.php?page=pages");
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $pageModel = new PageModel();
         $page = $pageModel->getPageById($_GET['id']);
 
-        if(!$page) {
+        if (!$page) {
             echo "Page not found";
             return;
         }
@@ -41,8 +51,9 @@ class PageController {
         include 'app/views/pages/edit.php';
     }
 
-    public function update(){
-        if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['slug'])){
+    public function update()
+    {
+        if (isset($_POST['id']) && isset($_POST['title']) && isset($_POST['slug'])) {
             $id = trim($_POST['id']);
             $title = trim($_POST['title']);
             $slug = trim($_POST['slug']);
@@ -53,12 +64,13 @@ class PageController {
             }
 
             $pageModel = new PageModel();
-            $pageModel -> updatePage($id, $title, $slug);
+            $pageModel->updatePage($id, $title, $slug);
         }
         header('Location: index.php?page=pages');
     }
 
-    public function delete(){
+    public function delete()
+    {
         $pageModel = new PageModel();
         $pageModel->deletePage($_GET['id']);
 

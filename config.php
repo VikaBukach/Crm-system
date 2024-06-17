@@ -1,10 +1,27 @@
 <?php
 
-return [
-    'db_host' => 'mysql',
-    'db_user' => 'root',
-    'db_pass' => 'root',
-    'db_name' => 'crm_for_tgBot',
+function tt($str) {
+    echo "<pre>";
+    print_r($str);
+    echo "</pre>";
+}
 
-    'start_role' => '1', //here is writing 'id' with roles table, which will be created by default
-];
+function tte($str) {
+    echo "<pre>";
+    print_r($str);
+    echo "</pre>";
+    exit();
+}
+
+//config.php
+
+define('APP_BASE_PATH', 'crm_for_telegram_v1');
+
+define('DB_HOST', 'mysql');
+define('DB_USER', 'root');
+define('DB_PASS', 'root');
+define('DB_NAME', 'crm_for_tgBot');
+
+define('START_ROLE', 1);
+
+

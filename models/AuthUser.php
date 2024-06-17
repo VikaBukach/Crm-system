@@ -1,19 +1,24 @@
 <?php
 
-class AuthUser{
-    private  $db;
+namespace controllers\models;
 
-    public function __construct() {
+class AuthUser
+{
+    private $db;
+
+    public function __construct()
+    {
         $this->db = Database::getInstance()->getConnection();
 
-        try{
-            $result = $this-> db->query("SELECT 1 FROM `users` LIMIT 1");
-        }catch(PDOException $e) {
+        try {
+            $result = $this->db->query("SELECT 1 FROM `users` LIMIT 1");
+        } catch (PDOException $e) {
             $this->createTable();
         }
     }
 
-    public function createTable(){
+    public function createTable()
+    {
         $roleTableQuery = "CREATE TABLE IF NOT EXISTS `roles`(
              `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
              `role_name` VARCHAR(255) NOT NULL,
@@ -35,16 +40,17 @@ class AuthUser{
              FOREIGN KEY (`role`) REFERENCES `roles`(`id`)
         )";
 
-        try{  //запит у БД
+        try {  //запит у БД
             $this->db->exec($roleTableQuery);
             $this->db->exec($userTableQuery);
             return true;
-        }catch(PDOException $e) {
+        } catch (PDOException $e) {
             return false;
         }
     }
 
-    public function register($username, $email, $password) {
+    public function register($username, $email, $password)
+    {
         $created_at = date('Y-m-d H:i:s');
 
         $query = "INSERT INTO users(username, email, password,created_at) VALUES (?, ?, ?, ?)";
@@ -58,7 +64,8 @@ class AuthUser{
         }
     }
 
-    public function login($email, $password){
+    public function login($email, $password)
+    {
 
         try {
             $query = "SELECT * FROM users WHERE email = ? LIMIT 1";
@@ -72,12 +79,13 @@ class AuthUser{
             }
 
             return false;
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             return false;
         }
     }
 
-    public function findByEmail($email){
+    public function findByEmail($email)
+    {
 
         try {
             $query = "SELECT * FROM users WHERE email = ? LIMIT 1";
@@ -87,7 +95,7 @@ class AuthUser{
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $user ? $user : false;
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             return false;
         }
     }

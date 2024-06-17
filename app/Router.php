@@ -1,0 +1,50 @@
+<?php
+
+namespace app;
+
+use controllers\auth\AuthController;
+use controllers\home\HomeController;
+use controllers\pages\PageController;
+use controllers\roles\RoleController;
+use controllers\users\UsersController;
+
+class Router{
+    // defining routes for regular expressions
+    private $routes = [
+        '/^\/' . APP_BASE_PATH . '\/?$/' => ['controller' => 'home\\HomeController', 'action' => 'index'],
+    ];
+
+    public function run() {
+       $uri = $_SERVER['REQUEST_URI'];
+       $controller = null;
+       $action = null;
+       $params = null;
+
+       //cycling through the routes while found that need:
+       foreach ($this->routes as $pattern => $route) {
+           //look at the route which corresponds  URI
+           if(preg_match($pattern, $uri, $matches)){
+               //get controller`s name from $route
+               $controller = "controllers\\"   . $route['controller'] ;
+               //get movie from $route or URI
+               $action = $route['action'] ?? $matches['action'] ?? 'index';
+               //get params
+               $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+               //if found route that interrupt the cycle
+               break;
+           }
+       }
+       if(!$controller) {
+           http_response_code(404);
+           echo "Page not found!";
+           return;
+       }
+       $controllerInstance = new $controller();
+       if(!method_exists($controllerInstance, $action)) {
+           http_response_code(404);
+           echo "Page not found!";
+       }
+       call_user_func_array([$controllerInstance, $action], [$params]);
+
+    }
+}

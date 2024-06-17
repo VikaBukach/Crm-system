@@ -1,14 +1,21 @@
 <?php
+
+namespace controllers\auth;
+use controllers\models\AuthUser;
+
 require_once 'app/models/AuthUser.php';
 
-class AuthController {
-    public function register() {
+class AuthController
+{
+    public function register()
+    {
 
         include 'app/views/users/register.php';
     }
 
-    public function store() {
-        if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])){
+    public function store()
+    {
+        if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
             $username = trim($_POST['username']);
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
@@ -19,7 +26,7 @@ class AuthController {
                 return;
             }
 
-            if ($password !== $confirm_password){
+            if ($password !== $confirm_password) {
                 echo "Passwords do not match";
                 return;
             }
@@ -30,38 +37,41 @@ class AuthController {
         header("Location: index.php?page=login");
     }
 
-    public function login(){
+    public function login()
+    {
         include 'app/views/users/login.php';
     }
 
-    public  function authentication(){
+    public function authentication()
+    {
         $authModel = new AuthUser();
 
-        if(isset($_POST['email']) && isset($_POST['password'])){
+        if (isset($_POST['email']) && isset($_POST['password'])) {
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
             $remember = isset($_POST['remember']) ? $_POST['remember'] : '';
 
             $user = $authModel->findByEmail($email);
 
-            if($user && password_verify($password, $user['password'])){
+            if ($user && password_verify($password, $user['password'])) {
                 session_start();
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_role'] = $user['role'];
 
-                if ($remember == 'on'){
+                if ($remember == 'on') {
                     setcookie('user_email', $email, time() + (7 * 24 * 60 * 60), '/');
                     setcookie('user_password', $password, time() + (7 * 24 * 60 * 60), '/');
                 }
 
                 header("Location: index.php");
-            }else{
+            } else {
                 echo "Invalid email or password";
             }
         }
     }
 
-    public function logout(){
+    public function logout()
+    {
         session_start();
         session_unset();
         session_destroy();
