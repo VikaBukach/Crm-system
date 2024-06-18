@@ -1,11 +1,9 @@
 <?php
 
 namespace controllers\users;
-use controllers\models\roles\Role;
-use controllers\models\User;
 
-require_once 'app/models/User.php';
-require_once 'app/models/roles/Role.php';
+use models\roles\Role;
+use models\users\User;
 
 class UsersController
 {
@@ -34,23 +32,22 @@ class UsersController
             }
 
             $userModel = new User();
-            $config = require_once __DIR__ . '/../../../config.php';
             $data = [
                 'username' => $_POST['username'],
                 'email' => $_POST['email'],
                 'password' => $password,
                 'role' => 1,
-//                 'role'=> $config['start_role'],
             ];
             $userModel->create($data);
         }
-        header("Location: index.php?page=users");
+        $path = '/users';
+        header("Location: $path");
     }
 
-    public function edit()
-    {
+    public function edit($parms){
+
         $userModel = new User();
-        $user = $userModel->read($_GET['id']);
+        $user = $userModel->read($parms['id']);
 
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();

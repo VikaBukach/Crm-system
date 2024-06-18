@@ -4,8 +4,8 @@ $title = 'Roles';
 ob_start();
 ?>
 
-        <h1 class="text-center mb-4">Roles</h1>
-        <a href="index.php?page=roles&action=create" class="btn btn-success">Create role</a>
+        <h1 class="mb-4">Roles</h1>
+        <a href="/roles/create" class="btn btn-success">Create role</a>
         <table class="table">
             <thead>
             <tr>
@@ -22,9 +22,9 @@ ob_start();
                 <td><?= $role['role_name'] ?></td>
                 <td><?= $role['role_description'] ?></td>
                 <td>
-                    <a href="index.php?page=roles&action=edit&id=<?php echo $role['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <form method="POST" action="index.php?page=roles&action=delete&id=<?php echo $role['id']; ?>" class="d-inline-block">
-                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm("Are you sure?")">Delete</button>
+                    <a href="/roles/edit/<?= $role['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <form method="POST" action="/roles/delete/<?= $role['id']; ?>" class="d-inline-block">
+<!--                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm("Are you sure?")">Delete</button>-->
                     </form>
                 </td>
             </tr>

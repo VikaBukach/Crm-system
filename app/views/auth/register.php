@@ -4,10 +4,8 @@ $title = 'Register';
 ob_start();
 ?>
 
-<div class="row justify-content-center mt-5">
-    <div class="col-lg-6 col-md-8 col-sm-10">
-        <h1 class="text-center mb-4">Register</h1>
-<form method="POST" action="index.php?page=auth&action=store">
+<h1 class="mb-4">Register</h1>
+<form method="POST" action="/users/store">
     <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input type="text" class="form-control" id="username" name="username" required>
@@ -29,13 +27,11 @@ ob_start();
 </form>
     <div class="mt-4">
         <p>Already have an account?
-            <a href="index.php?page=login">
+            <a href="/auth/login">
                 Login here
             </a>
         </p>
     </div>
-</div>
-</div>
 
 <?php $content = ob_get_clean();
 

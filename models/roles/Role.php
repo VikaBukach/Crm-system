@@ -1,8 +1,8 @@
 <?php
 
-namespace controllers\models\roles;
+namespace models\roles;
 
-use controllers\models\Database;
+use models\Database;
 
 class Role
 {
@@ -14,7 +14,7 @@ class Role
 
         try {
             $result = $this->db->query("SELECT 1 FROM `roles` LIMIT 1");
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->createTable();
         }
     }
@@ -30,7 +30,7 @@ class Role
         try {  //запит у БД
             $this->db->exec($roleTableQuery);
             return true;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return false;
         }
     }
@@ -41,12 +41,12 @@ class Role
         try {
             $stmt = $this->db->query('SELECT * FROM roles');
             $roles = [];
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
                 $roles[] = $row;
             }
 //            return $roles;
             return $roles ?: [];
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return false;
         }
     }
@@ -59,9 +59,9 @@ class Role
         try {
             $stmt = $this->db->prepare(($query));
             $stmt->execute([$id]);
-            $role = $stmt->fetch(PDO::FETCH_ASSOC);
+            $role = $stmt->fetch(\PDO::FETCH_ASSOC);
             return $role ? $role : false;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return false;
         }
     }
@@ -89,7 +89,7 @@ class Role
             $stmt->execute([$role_name, $role_description, $id]);
 
             return true;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return false;
         }
     }
@@ -102,7 +102,7 @@ class Role
             $stmt = $this->db->prepare($query);
             $stmt->execute(['$id']);
             return true;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
         }
         return false;
     }

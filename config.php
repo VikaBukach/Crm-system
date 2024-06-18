@@ -15,8 +15,6 @@ function tte($str) {
 
 //config.php
 
-define('APP_BASE_PATH', 'crm_for_telegram_v1');
-
 define('DB_HOST', 'mysql');
 define('DB_USER', 'root');
 define('DB_PASS', 'root');

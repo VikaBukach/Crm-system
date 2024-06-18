@@ -4,10 +4,9 @@ $title = 'Edit Page';
 ob_start();
 ?>
 
-<div class="row justify-content-center mt-5">
-    <div class="col-lg-6 col-md-8 col-sm-10">
-        <h1 class="text-center mb-4">Edit page</h1>
-        <form method="POST" action="index.php?page=pages&action=update">
+
+        <h1 class="mb-4">Edit page</h1>
+        <form method="POST" action="/pages/update/<?php echo $page['id']; ?>">
             <input type="hidden" name="id" value="<?= $page['id'] ?>">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
@@ -17,10 +16,16 @@ ob_start();
                 <label for="slug" class="form-label">Slug</label>
                 <input class="form-control" id="slug" name="slug" value="<?= $page['slug'] ?>" required>
             </div>
+            <div id="roles-container" class="mb-3">
+                <label for="roles" class="form-label">Roles</label>
+                // дописати
+            </div>
+
+
+
             <button type="submit" class="btn btn-primary">Update page</button>
         </form>
-    </div>
-</div>
+
 
 <?php $content = ob_get_clean();
 

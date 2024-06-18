@@ -11,7 +11,10 @@ use controllers\users\UsersController;
 class Router{
     // defining routes for regular expressions
     private $routes = [
-        '/^\/' . APP_BASE_PATH . '\/?$/' => ['controller' => 'home\\HomeController', 'action' => 'index'],
+        //determining the route using regular expressions
+        '/^\/?$/' => ['controller' => 'home\\HomeController', 'action' => 'index'],
+        '/^\/users(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'users\\UsersController'],
+
     ];
 
     public function run() {
@@ -43,6 +46,7 @@ class Router{
        if(!method_exists($controllerInstance, $action)) {
            http_response_code(404);
            echo "Page not found!";
+           return;
        }
        call_user_func_array([$controllerInstance, $action], [$params]);
 
