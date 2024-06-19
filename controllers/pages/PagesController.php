@@ -2,9 +2,8 @@
 
 namespace controllers\pages;
 
-use controllers\models\pages\PageModel;
+use models\pages\PageModel;
 
-require_once 'app/models/pages/PageModel.php';
 
 class PageController
 {
@@ -35,10 +34,11 @@ class PageController
             $pageModel = new PageModel();
             $pageModel->createPage($title, $slug);
         }
-        header("Location: index.php?page=pages");
+        $path = '/' . '/pages';
+        header("Location: $path");
     }
 
-    public function edit($id)
+    public function edit($params)
     {
         $pageModel = new PageModel();
         $page = $pageModel->getPageById($_GET['id']);
