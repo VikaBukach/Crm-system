@@ -6,7 +6,7 @@
 
  <h1>Edit user</h1>
 
- <form method="POST" action="index.php?page=users&action=update&id=<?php echo htmlspecialchars ($user['id']); ?>">
+ <form method="POST" action="/users/update/<?php echo htmlspecialchars ($user['id']); ?>">
      <div class="mb-3">
          <label for="username" class="form-label">Username</label>
          <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>

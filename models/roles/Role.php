@@ -76,7 +76,7 @@ class Role
             $stmt = $this->db->prepare($query);
             $stmt->execute([$role_name, $role_description]);
             return true;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             return false;
         }
     }

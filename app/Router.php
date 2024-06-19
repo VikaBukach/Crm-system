@@ -14,6 +14,7 @@ class Router{
         //determining the route using regular expressions
         '/^\/?$/' => ['controller' => 'home\\HomeController', 'action' => 'index'],
         '/^\/users(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'users\\UsersController'],
+        '/^\/roles(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'roles\\RoleController'],
 
     ];
 

@@ -44,10 +44,10 @@ class UsersController
         header("Location: $path");
     }
 
-    public function edit($parms){
+    public function edit($params){
 
         $userModel = new User();
-        $user = $userModel->read($parms['id']);
+        $user = $userModel->read($params['id']);
 
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
@@ -55,19 +55,21 @@ class UsersController
         include 'app/views/users/edit.php';
     }
 
-    public function update()
+    public function update($params)
     {
         $userModel = new User();
-        $userModel->update($_GET['id'], $_POST);
+        $userModel->update($params['id'], $_POST);
 
-        header('Location: index.php?page=users');
+        $path = '/users';
+        header("Location: $path");
     }
 
-    public function delete()
+    public function delete($params)
     {
         $userModel = new User();
-        $userModel->delete($_GET['id']);
+        $userModel->delete($params['id']);
 
-        header('Location: index.php?page=users');
+        $path = '/users';
+        header("Location: $path");
     }
 }
