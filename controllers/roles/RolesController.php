@@ -1,9 +1,7 @@
 <?php
 
 namespace controllers\roles;
-use controllers\models\roles\Role;
-
-require_once 'app/models/roles/Role.php';
+use models\roles\Role;
 
 class RoleController
 {
@@ -34,13 +32,14 @@ class RoleController
             $roleModel = new Role();
             $roleModel->createRole($role_name, $role_description);
         }
-        header("Location: index.php?page=roles");
+        $path = '/roles';
+        header("Location: $path");
     }
 
-    public function edit($id)
+    public function edit($params)
     {
         $roleModel = new Role();
-        $role = $roleModel->getRoleById($_GET['id']);
+        $role = $roleModel->getRoleById($params['id']);
 
         if (!$role) {
             echo "Role not found";
@@ -65,7 +64,8 @@ class RoleController
             $roleModel = new Role();
             $roleModel->updateRole($id, $role_name, $role_description);
         }
-        header('Location: index.php?page=roles');
+        $path = '/roles';
+        header("Location: $path");
     }
 
     public function delete()
@@ -73,7 +73,8 @@ class RoleController
         $roleModel = new Role();
         $roleModel->deleteRole($_GET['id']);
 
-        header('Location: index.php?page=roles');
+        $path = '/roles';
+        header("Location: $path");
     }
 }
 
