@@ -1,10 +1,9 @@
 <?php
 
-namespace models\roles;
-
+namespace models\todo\category;
 use models\Database;
 
-class Role
+class CategoryModel
 {
     private $db;
 
@@ -13,7 +12,7 @@ class Role
         $this->db = Database::getInstance()->getConnection();
 
         try {
-            $result = $this->db->query("SELECT 1 FROM `roles` LIMIT 1");
+            $result = $this->db->query("SELECT 1 FROM `todo_category` LIMIT 1");
         } catch (\PDOException $e) {
             $this->createTable();
         }
@@ -21,72 +20,74 @@ class Role
 
     public function createTable()
     {
-        $roleTableQuery = "CREATE TABLE IF NOT EXISTS `roles`(
+        $query = "CREATE TABLE IF NOT EXISTS `todo_category`(
              `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-             `role_name` VARCHAR(255) NOT NULL,
-             `role_description` TEXT
-        )";
+             `title` VARCHAR(255) NOT NULL,
+             `description` TEXT,
+             `usability` TINYINT DEFAULT 1,
+             `user` INT NOT NULL,
+              FOREIGN KEY (user) REFERENCES users(id) ON DELETE CASCADE   
+     )";
 
         try {  //запит у БД
-            $this->db->exec($roleTableQuery);
+            $this->db->exec($query);
             return true;
         } catch (\PDOException $e) {
             return false;
         }
     }
 
-    public function getAllRoles()
+    public function getAllCategories()
     {
-
         try {
-            $stmt = $this->db->query('SELECT * FROM roles');
-            $roles = [];
+            $stmt = $this->db->query("SELECT * FROM todo_category");
+            $todo_category = [];
             while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
                 $roles[] = $row;
             }
 
-            return $roles ?: [];
+            return $todo_category ?: [];
         } catch (\PDOException $e) {
             return false;
         }
     }
 
-    public function getRoleById($id)
+    public function createCategory($title, $description, $user_id)
     {
 
-        $query = "SELECT * FROM roles WHERE id = ?";
+        $query = "INSERT INTO roles(title, description, user) VALUES (?, ?, ?)";
 
         try {
-            $stmt = $this->db->prepare(($query));
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$title, $description, $user_id]);
+            return true;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function getCategoryById($id)
+    {
+
+        $query = "SELECT * FROM todo_category WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($query);
             $stmt->execute([$id]);
-            $role = $stmt->fetch(\PDO::FETCH_ASSOC);
-            return $role ? $role : false;
+            $todo_category = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $todo_category ? $todo_category : false;
         } catch (\PDOException $e) {
             return false;
         }
     }
 
-
-    public function createRole($role_name, $role_description)
+    public function updateCategory($id, $title, $description, $usability)
     {
-
-        $query = "INSERT INTO roles(role_name, role_description) VALUES (?, ?)";
+        $query = "UPDATE todo_category SET title = ?, description = ? usability = ? WHERE id = ?";
 
         try {
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$role_name, $role_description]);
-            return true;
-        } catch (\PDOException $e) {
-            return false;
-        }
-    }
-
-    public function updateRole($id, $role_name, $role_description)
-    {
-        $query = "UPDATE roles SET role_name = ?, role_description = ? WHERE id = ?";
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([$role_name, $role_description, $id]);
+            $stmt->execute([$title, $description, $usability, $id]);
 
             return true;
         } catch (\PDOException $e) {
@@ -94,9 +95,9 @@ class Role
         }
     }
 
-    public function deleteRole($id)
+    public function deleteCategory($id)
     {
-        $query = "DELETE FROM roles WHERE id = ?";
+        $query = "DELETE FROM todo_category WHERE id = ?";
 
         try {
             $stmt = $this->db->prepare($query);

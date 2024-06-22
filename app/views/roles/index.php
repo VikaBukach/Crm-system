@@ -24,7 +24,7 @@ ob_start();
                 <td>
                     <a href="/roles/edit/<?= $role['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
                     <form method="POST" action="/roles/delete/<?= $role['id']; ?>" class="d-inline-block">
-<!--                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm("Are you sure?")">Delete</button>-->
+                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm("Are you sure?")">Delete</button>
                     </form>
                 </td>
             </tr>

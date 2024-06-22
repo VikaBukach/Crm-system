@@ -1,30 +1,31 @@
 <?php
 
-$title = 'Roles';
+$title = 'Todo Category';
 ob_start();
 ?>
 
-        <h1 class="mb-4">Roles</h1>
-        <a href="/roles/create" class="btn btn-success">Create role</a>
+        <h1 class="mb-4">Todo Category</h1>
+        <a href="/todo/category/create" class="btn btn-success">Create category</a>
         <table class="table">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Role Name</th>
-                <th>Role Description</th>
-                <th>Action</th>
+                <th>Title</th>
+                <th> Description</th>
+                <th>Usability</th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($roles as $role): ?>
+            <?php foreach ($categories as $category): ?>
             <tr>
-                <td><?= $role['id'] ?></td>
-                <td><?= $role['role_name'] ?></td>
-                <td><?= $role['role_description'] ?></td>
+                <td><?= $category['id'] ?></td>
+                <td><?= $category['title'] ?></td>
+                <td><?= $category['description'] ?></td>
+                <td><?= $category['usability'] ?></td>
                 <td>
-                    <a href="/roles/edit/<?= $role['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <form method="POST" action="/roles/delete/<?= $role['id']; ?>" class="d-inline-block">
-<!--                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm("Are you sure?")">Delete</button>-->
+                    <a href="/todo/category/edit/<?= $category['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <form method="POST" action="/todo/category/delete/<?= $category['id']; ?>" class="d-inline-block">
+                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm("Are you sure?")">Delete</button>
                     </form>
                 </td>
             </tr>

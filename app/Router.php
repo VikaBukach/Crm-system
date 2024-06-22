@@ -17,7 +17,8 @@ class Router{
         '/^\/auth(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'auth\\AuthController'],
         '/^\/roles(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'roles\\RoleController'],
         '/^\/pages(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'pages\\PageController'],
-        '/^\/(register|login|authentication|logout)(\/(?P<action>[a-zA-Z]+))?$/' => ['controller' => 'users\\AuthController']
+        '/^\/(register|login|authentication|logout)(\/(?P<action>[a-zA-Z]+))?$/' => ['controller' => 'users\\AuthController'],
+        '/^\/todo\/category(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'todo\category\\CategoryController'],
 
     ];
 

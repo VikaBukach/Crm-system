@@ -105,8 +105,6 @@ class PageController
 
         header("Location: /pages");
     }
-
-
 }
 
 

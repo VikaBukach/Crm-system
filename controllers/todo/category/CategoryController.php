@@ -1,8 +1,9 @@
 <?php
 
-namespace controllers\todo;
+namespace controllers\todo\category;
+use models\todo\category\CategoryModel;
 use models\Check;
-use models\roles\Role;
+
 
 
 class CategoryController
@@ -16,83 +17,85 @@ class CategoryController
     {
         $this->check->requirePermission();
 
-        $roleModel = new Role();
-        $roles = $roleModel->getAllRoles();
+        $todoCategoryModel = new CategoryModel();
+        $categories = $todoCategoryModel->getAllCategories();
 
-        include 'app/views/roles/index.php';
+        include 'app/views/todo/category/index.php';
     }
 
     public function create()
     {
         $this->check->requirePermission();
 
-        include 'app/views/roles/create.php';
+        include 'app/views/todo/category/create.php';
     }
 
     public function store()
     {
         $this->check->requirePermission();
 
-        if (isset($_POST['role_name']) && isset($_POST['role_description'])) {
-            $role_name = trim(htmlspecialchars($_POST['role_name']));
-            $role_description = trim(html($_POST['role_description']));
+        if (isset($_POST['title']) && isset($_POST['description'])) {
+            $title = trim(htmlspecialchars($_POST['title']));
+            $description = trim(htmlspecialchars($_POST['description']));
+            $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
-            if (empty($role_name)) {
-                echo "Role name is required";
+            if (empty($title) || empty($description)) {
+                echo "TTitle and Description are required";
                 return;
             }
 
-            $roleModel = new Role();
-            $roleModel->createRole($role_name, $role_description);
+            $todoCategoryModel = new CategoryModel();
+            $todoCategoryModel->createCategory($title, $description, $user_id);
         }
 
-        header("Location: /roles");
+        header("Location: /todo/category");
     }
 
     public function edit($params)
     {
         $this->check->requirePermission();
 
-        $roleModel = new Role();
-        $role = $roleModel->getRoleById($params['id']);
+        $todoCategoryModel = new CategoryModel();
+        $category = $todoCategoryModel->getCategoryById($params['id']);
 
-        if (!$role) {
-            echo "Role not found";
+        if (!$category) {
+            echo "Category not found";
             return;
         }
 
-        include 'app/views/roles/edit.php';
+        include 'app/views/todo/category/edit.php';
     }
 
     public function update($params)
     {
         $this->check->requirePermission();
 
-        if (isset($params['id']) && isset($_POST['role_name']) && isset($_POST['role_description'])) {
+        if (isset($params['id']) && isset($_POST['title']) && isset($_POST['description'])) {
             $id = trim($params['id']);
-            $role_name = trim(htmlspecialchars($_POST['role_name']));
-            $role_description = trim(htmlspecialchars($_POST['role_description']));
+            $title = trim(htmlspecialchars($_POST['title']));
+            $description = trim(htmlspecialchars($_POST['description']));
+            $usability = isset($_POST['usability']) ? $_POST['usability'] : 0;
 
-            if (empty($role_name)) {
-                echo "Role name is required";
+            if (empty($title) || empty($description)) {
+                echo "Role and Title are required";
                 return;
             }
 
-            $roleModel = new Role();
-            $roleModel->updateRole($id, $role_name, $role_description);
+            $todoCategoryModel = new CategoryModel();
+            $todoCategoryModel->updateCategory($id, $title, $description, $usability);
         }
 
-        header("Location: /roles");
+        header("Location: /todo/category");
     }
 
     public function delete($params)
     {
         $this->check->requirePermission();
 
-        $roleModel = new Role();
-        $roleModel->deleteRole($params['id']);
+        $todoCategoryModel = new CategoryModel();
+        $todoCategoryModel->deleteCategory($params['id']);
 
-        header("Location: /roles");
+        header("Location: /todo/category");
     }
 }
 

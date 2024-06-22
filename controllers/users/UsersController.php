@@ -50,7 +50,7 @@ class UsersController
                 'username' => $_POST['username'],
                 'email' => $_POST['email'],
                 'password' => $password,
-                'role' => 1,  // усім юзерам даємо при створ роль по дефолту 1
+                'role' => 1,
             ];
             $userModel->create($data);
         }

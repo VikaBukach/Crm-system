@@ -1,3 +1,13 @@
+<?php
+
+//checking the active menu item
+function is_active($path): string
+{
+    $currentPath = $_SERVER['REQUEST_URI'];
+    return $path === $currentPath ? 'active' : '';
+}
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,6 +16,7 @@
     <title><?= $title ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <!--    <link rel="stylesheet" href="/app/css/style.css">-->
+
 </head>
 <body>
 <div class="container">
@@ -20,45 +31,36 @@
 
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="/" class="nav-link " aria-current="page">
+                    <a href="/" class="nav-link <?= is_active('/') ?>" aria-current="page">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="/"></use></svg>
                         Home
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/users" class="nav-link text-white">
+                <li>
+                    <a href="/users" class="nav-link text-white <?= is_active('/users') ?>">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="/users"></use></svg>
                         Users
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/roles" class="nav-link text-white">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="index.php?page=users"></use></svg>
+                <li>
+                    <a href="/roles" class="nav-link text-white <?= is_active('/roles') ?>">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="/roles"></use></svg>
                         Roles
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/pages" class="nav-link text-white">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="index.php?page=users"></use></svg>
+                <li>
+                    <a href="/pages" class="nav-link text-white <?= is_active('/pages') ?>">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="/pages"></use></svg>
                         Pages
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/auth/register" class="nav-link text-white">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="index.php?page=users"></use></svg>
-                        Register
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/auth/login" class="nav-link text-white">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="index.php?page=users"></use></svg>
-                        Login
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/auth/logout" class="nav-link text-white">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="index.php?page=users"></use></svg>
-                        Logout
+                <hr>
+                <h4>To do list</h4>
+
+                <li>
+                    <a href="/todo/category" class="nav-link text-white <?= is_active('/todo/category') ?>">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="/todo/category"></use></svg>
+                        Category
                     </a>
                 </li>
             </ul>
@@ -73,7 +75,8 @@
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><a class="dropdown-item" href="#">Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <li><a class="dropdown-item" href="/auth/logout">Sign out</a></li>
+                        <li><a class="dropdown-item" href="/auth/login">Sign in</a></li>
                     </ul>
                 </div>
         </div>
