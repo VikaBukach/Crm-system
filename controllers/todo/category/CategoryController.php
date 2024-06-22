@@ -1,10 +1,9 @@
 <?php
 
 namespace controllers\todo\category;
+
 use models\todo\category\CategoryModel;
 use models\Check;
-
-
 
 class CategoryController
 {

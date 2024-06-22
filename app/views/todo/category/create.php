@@ -1,21 +1,21 @@
 <?php
 
-$title = 'Create role';
+$title = 'Todo category add';
 ob_start();
 ?>
 
 
-    <h1 class="mb-4">Create role</h1>
-        <form method="POST" action="/roles/store">
+    <h1 class="mb-4">Todo category add</h1>
+        <form method="POST" action="/todo/category/store">
     <div class="mb-3">
-        <label for="role_name" class="form-label">Role name</label>
-        <input type="text" class="form-control" id="role_name" name="role_name" required>
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" required>
     </div>
     <div class="mb-3">
-        <label for="role_description" class="form-label">Role Description</label>
-        <textarea class="form-control" id="role_description" name="role_description" required></textarea>
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" required></textarea>
     </div>
-            <button type="submit" class="btn btn-primary">Create role</button>
+            <button type="submit" class="btn btn-primary">Create description</button>
 </form>
 
 

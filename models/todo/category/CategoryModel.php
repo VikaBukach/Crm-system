@@ -43,7 +43,7 @@ class CategoryModel
             $stmt = $this->db->query("SELECT * FROM todo_category");
             $todo_category = [];
             while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-                $roles[] = $row;
+                $todo_category[] = $row;
             }
 
             return $todo_category ?: [];
@@ -54,8 +54,7 @@ class CategoryModel
 
     public function createCategory($title, $description, $user_id)
     {
-
-        $query = "INSERT INTO roles(title, description, user) VALUES (?, ?, ?)";
+        $query = "INSERT INTO todo_category (title, description, user) VALUES (?, ?, ?)";
 
         try {
             $stmt = $this->db->prepare($query);

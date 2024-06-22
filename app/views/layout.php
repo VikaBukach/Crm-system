@@ -55,7 +55,7 @@ function is_active($path): string
                     </a>
                 </li>
                 <hr>
-                <h4>To do list</h4>
+                <h4 style="margin-left: 46px;">To do list</h4>
 
                 <li>
                     <a href="/todo/category" class="nav-link text-white <?= is_active('/todo/category') ?>">
