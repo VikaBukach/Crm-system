@@ -21,7 +21,7 @@ ob_start();
                 <td><?= $category['id'] ?></td>
                 <td><?= $category['title'] ?></td>
                 <td><?= $category['description'] ?></td>
-                <td><?= $category['usability'] ?></td>
+                <td><?= $category['usability'] == 1 ? 'Yes' : 'No'?></td>
                 <td>
                     <a href="/todo/category/edit/<?= $category['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
                     <form method="POST" action="/todo/category/delete/<?= $category['id']; ?>" class="d-inline-block">
