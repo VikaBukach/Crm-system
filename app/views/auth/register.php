@@ -27,9 +27,7 @@ ob_start();
 </form>
     <div class="mt-4">
         <p>Already have an account?
-            <a href="/auth/login">
-                Login here
-            </a>
+            <a href="/auth/login"><?=htmlspecialchars("Login here")?></a>
         </p>
     </div>
 

@@ -6,26 +6,17 @@ use models\pages\PageModel;
 use models\roles\Role;
 use models\Check;
 
-
-class PagesController
+class PageController
 {
     private $check;
-
     public function __construct(){
-        $this->check = new Check();
+       $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
+       $this->check = new Check($userRole);
     }
-
 
     public function index()
     {
-        $slug = $this->check->getCurrentUrlSlug();
-
-        if(!$this->checkPermission($slug)){
-            $path = '/';
-            header("Location: $path");
-            return;
-        }
-
+        $this->check->requirePermission();
 
         $pageModel = new PageModel();
         $pages = $pageModel->getAllPages();
@@ -35,6 +26,8 @@ class PagesController
 
     public function create()
     {
+        $this->check->requirePermission();
+
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
 
@@ -43,10 +36,13 @@ class PagesController
 
     public function store()
     {
-        if (isset($_POST['title']) && isset($_POST['slug'])) {
-            $title = trim($_POST['title']);
-            $slug = trim($_POST['slug']);
-            $roles = implode(",", $_POST['roles']);
+        $this->check->requirePermission();
+
+        if (isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['roles'])) {
+            $title = trim(htmlspecialchars($_POST['title']));
+            $slug = trim(htmlspecialchars($_POST['slug']));
+            $roles = filter_var_array($_POST['roles'], FILTER_SANITIZE_NUMBER_INT);
+            $roles = implode(",", $roles);
 
             if (empty($title) || empty($slug) || empty($roles)) {
                 echo "Title and Slug fields are required";
@@ -56,18 +52,19 @@ class PagesController
             $pageModel = new PageModel();
             $pageModel->createPage($title, $slug, $roles);
         }
-        $path = '/' . 'pages';
-        header("Location: $path");
+
+        header("Location: /pages");
     }
 
     public function edit($params)
     {
+        $this->check->requirePermission();
+
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
 
         $pageModel = new PageModel();
         $page = $pageModel->getPageById($params['id']);
-
 
         if (!$page) {
             echo "Page not found";
@@ -79,11 +76,14 @@ class PagesController
 
     public function update($params)
     {
+        $this->check->requirePermission();
+
         if (isset($params['id']) && isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['roles']) ) {
             $id = trim($params['id']);
-            $title = trim($_POST['title']);
-            $slug = trim($_POST['slug']);
-            $roles = implode(",", $_POST['roles']);
+            $title = trim(htmlspecialchars($_POST['title']));
+            $slug = trim(htmlspecialchars($_POST['slug']));
+            $roles = filter_var_array($_POST['roles'], FILTER_SANITIZE_NUMBER_INT);
+            $roles = implode("," ,$roles);
 
             if (empty($title) || empty($slug) || empty($roles)) {
                 echo "Title, Slug and Roles fields are required";
@@ -93,36 +93,20 @@ class PagesController
             $pageModel = new PageModel();
             $pageModel->updatePage($id, $title, $slug, $roles);
         }
-        $path = '/' . 'pages';
-        header("Location: $path");
+        header("Location: /pages");
     }
 
     public function delete($params)
     {
+        $this->check->requirePermission();
+
         $pageModel = new PageModel();
         $pageModel->deletePage($params['id']);
 
-        $path = '/' . 'pages';
-        header("Location: $path");
+        header("Location: /pages");
     }
 
-    public function checkPermission($slug)
-    {
-        $pageModel = new PageModel();
-        $page = $pageModel->findBySlug($slug);
-        if(!$page) {
-            return false;
-        }
-        //get role permission for the page
-        $allowedRoles = explode(',', $page['role']);
 
-        //checking if the current user has access to the page
-        if (isset($_SESSION['user_role']) && in_array($_SESSION['user_role'], $allowedRoles)) {
-            return true;
-        }else{
-            return false;
-        }
-    }
 }
 
 

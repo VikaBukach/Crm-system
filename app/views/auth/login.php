@@ -21,11 +21,8 @@ ob_start();
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
             <div class="mt-3 text-center">
-                <p>Don`t have an account?
-                    <a href="../users/index.php?page=register">
-                        Register here
-                    </a>
-                </p>
+                Don`t have an account?
+                    <a href="/auth/register"><?=htmlspecialchars(" Register here")?></a>
             </div>
 
 

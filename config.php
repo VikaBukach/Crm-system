@@ -15,6 +15,10 @@ function tte($str) {
 
 //config.php
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 define('DB_HOST', 'mysql');
 define('DB_USER', 'root');
 define('DB_PASS', 'root');

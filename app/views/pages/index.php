@@ -12,6 +12,7 @@ ob_start();
         <th>ID</th>
         <th>Title</th>
         <th>Slug</th>
+        <th>Role</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -21,6 +22,7 @@ ob_start();
             <td><?= $page['id'] ?></td>
             <td><?= $page['title'] ?></td>
             <td><?= $page['slug'] ?></td>
+            <td><?= $page['role'] ?></td>
             <td>
                 <a href="/pages/edit/<?= $page['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
                 <form method="POST" action="/pages/delete/<?= $page['id']; ?>" class="d-inline-block">

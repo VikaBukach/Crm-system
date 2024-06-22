@@ -44,7 +44,7 @@ class Role
             while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
                 $roles[] = $row;
             }
-//            return $roles;
+
             return $roles ?: [];
         } catch (\PDOException $e) {
             return false;

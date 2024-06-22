@@ -16,6 +16,7 @@ ob_start();
                 <label for="role_description" class="form-label">Role Description</label>
                 <textarea class="form-control" id="role_description" name="role_description" required><?= $role['role_description'] ?></textarea>
             </div>
+
             <button type="submit" class="btn btn-primary">Update role</button>
         </form>
 

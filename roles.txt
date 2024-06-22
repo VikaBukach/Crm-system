@@ -1,0 +1,16 @@
+ ===============  Roles list :  ===============
+
+1. Subscriber: can only read articles and leave comments, but does not have the right to create
+               own content or manage the site;
+
+2. Editor: access to management and publication of articles, pages and other content materials on the site.
+           The editor can also manage comments and allow or prohibit their publication;
+
+3. Author :  can create and publish his own articles, but he does not have the ability to manage them
+             content of other users;
+
+4. Contributor: can create their own articles, but they cannot be published
+                until approved by an administrator or editor;
+
+5.Administrator : full access to all site functions, including user management,
+                plugins, as well as creating and publishing articles;

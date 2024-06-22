@@ -2,6 +2,7 @@
 
 $title = 'Edit Page';
 ob_start();
+
 ?>
 
 
@@ -17,8 +18,17 @@ ob_start();
                 <input class="form-control" id="slug" name="slug" value="<?= $page['slug'] ?>" required>
             </div>
             <div id="roles-container" class="mb-3">
-                <label for="roles" class="form-label">Roles</label>
-                // дописати
+                    <label for="roles" class="form-label">Roles</label>
+
+                <?php $page_roles = array_map( 'trim',explode(',', $page['role'])); ?>
+                    <?php foreach ($roles as $role): ?>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="roles[]" value="<?php echo $role['id']; ?>" <?php echo in_array($role['role_name'], $page_roles) ? 'checked' : '';?>>
+                            <label class="form-check-label" for="roles"><?php echo $role['role_name']; ?></label>
+                        </div>
+                    <?php endforeach; ?>
+
+
             </div>
 
 

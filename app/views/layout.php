@@ -32,31 +32,31 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.php?page=roles" class="nav-link text-white">
+                    <a href="/roles" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="index.php?page=users"></use></svg>
                         Roles
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.php?page=pages" class="nav-link text-white">
+                    <a href="/pages" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="index.php?page=users"></use></svg>
                         Pages
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.php?page=register" class="nav-link text-white">
+                    <a href="/auth/register" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="index.php?page=users"></use></svg>
                         Register
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.php?page=login" class="nav-link text-white">
+                    <a href="/auth/login" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="index.php?page=users"></use></svg>
                         Login
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.php?page=logout" class="nav-link text-white">
+                    <a href="/auth/logout" class="nav-link text-white">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="index.php?page=users"></use></svg>
                         Logout
                     </a>

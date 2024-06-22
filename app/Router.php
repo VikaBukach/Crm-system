@@ -14,7 +14,10 @@ class Router{
         //determining the route using regular expressions
         '/^\/?$/' => ['controller' => 'home\\HomeController', 'action' => 'index'],
         '/^\/users(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'users\\UsersController'],
+        '/^\/auth(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'auth\\AuthController'],
         '/^\/roles(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'roles\\RoleController'],
+        '/^\/pages(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'pages\\PageController'],
+        '/^\/(register|login|authentication|logout)(\/(?P<action>[a-zA-Z]+))?$/' => ['controller' => 'users\\AuthController']
 
     ];
 
@@ -50,6 +53,5 @@ class Router{
            return;
        }
        call_user_func_array([$controllerInstance, $action], [$params]);
-
     }
 }

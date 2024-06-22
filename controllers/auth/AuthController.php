@@ -1,23 +1,20 @@
 <?php
 
 namespace controllers\auth;
-use controllers\models\AuthUser;
-
-require_once 'app/models/AuthUser.php';
+use models\AuthUser;
 
 class AuthController
 {
     public function register()
     {
-
-        include 'app/views/users/register.php';
+        include 'app/views/auth/register.php';
     }
 
     public function store()
     {
         if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
-            $username = trim($_POST['username']);
-            $email = trim($_POST['email']);
+            $username = trim(htmlspecialchars($_POST['username']));
+            $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
             $password = trim($_POST['password']);
             $confirm_password = trim($_POST['confirm_password']);
 
@@ -34,12 +31,13 @@ class AuthController
             $userModel = new AuthUser();
             $userModel->register($username, $email, $password);
         }
-        header("Location: index.php?page=login");
+        header("Location: /auth/login");
+        exit();
     }
 
     public function login()
     {
-        include 'app/views/users/login.php';
+        include 'app/views/auth/login.php';
     }
 
     public function authentication()
@@ -54,16 +52,19 @@ class AuthController
             $user = $authModel->findByEmail($email);
 
             if ($user && password_verify($password, $user['password'])) {
-                session_start();
+//                session_start();
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_role'] = $user['role'];
+                $_SESSION['user_email'] = $user['email'];
 
                 if ($remember == 'on') {
                     setcookie('user_email', $email, time() + (7 * 24 * 60 * 60), '/');
                     setcookie('user_password', $password, time() + (7 * 24 * 60 * 60), '/');
                 }
 
-                header("Location: index.php");
+                header("Location: /");
+                exit();
+
             } else {
                 echo "Invalid email or password";
             }
@@ -72,11 +73,23 @@ class AuthController
 
     public function logout()
     {
-        session_start();
-        session_unset();
-        session_destroy();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        $_SESSION = [];
 
-        header('Location: index.php');
+        if(ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() -42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+            );
+        }
+
+//        session_unset();
+        session_destroy();
+        header("Location: /");
+        exit();
     }
 }
 
