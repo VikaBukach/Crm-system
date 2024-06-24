@@ -16,7 +16,9 @@ ob_start();
             </tr>
             </thead>
             <tbody>
+            <?php if ($categories !== false && is_array($categories)): ?>
             <?php foreach ($categories as $category): ?>
+<!--            --><?php //foreach ($categories as $category): ?>
             <tr>
                 <td><?= $category['id'] ?></td>
                 <td><?= $category['title'] ?></td>
@@ -30,6 +32,9 @@ ob_start();
                 </td>
             </tr>
             <?php endforeach; ?>
+            <?php else: ?>
+                <p>No categories found or error retrieving categories.</p>
+            <?php endif; ?>
             </tbody>
         </table>
 

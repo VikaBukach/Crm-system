@@ -19,6 +19,7 @@ class Router{
         '/^\/pages(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'pages\\PageController'],
         '/^\/(register|login|authentication|logout)(\/(?P<action>[a-zA-Z]+))?$/' => ['controller' => 'users\\AuthController'],
         '/^\/todo\/category(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'todo\category\\CategoryController'],
+        '/^\/todo\/tasks(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'todo\tasks\\TaskController'],
 
     ];
 

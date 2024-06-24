@@ -56,11 +56,16 @@ function is_active($path): string
                 </li>
                 <hr>
                 <h4 style="margin-left: 46px;">To do list</h4>
-
                 <li>
                     <a href="/todo/category" class="nav-link text-white <?= is_active('/todo/category') ?>">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="/todo/category"></use></svg>
                         Category
+                    </a>
+                </li>
+                <li>
+                    <a href="/todo/tasks" class="nav-link text-white <?= is_active('/todo/tasks') ?>">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="/todo/tasks"></use></svg>
+                        Tasks
                     </a>
                 </li>
             </ul>
