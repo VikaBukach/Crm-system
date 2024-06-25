@@ -62,11 +62,8 @@ ob_start();
              });
         }
 
-        document.addEventListener('DOMContentLoaded', (event) => {
-            updateRemainingTime();
-            setInterval(updateRemainingTime, 60000); // update every minute
-        });
-
+        updateRemainingTime();
+        setInterval(updateRemainingTime, 60000); // update every minute
     </script>
 
 <?php $content = ob_get_clean();
