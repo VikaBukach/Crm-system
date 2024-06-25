@@ -15,7 +15,7 @@ ob_start();
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#task-collapse<?php echo $task['id'];?>" aria-expanded="false" aria-controls="task-collapse<?php echo $task['id']; ?>">
                             <span class="col-12 col-md-6"><i class="fa-solid fa-square-up-right"></i><strong><?php echo $task['title']; ?></strong></span>
                             <span class="col-6 col-md-3 text-center"><i class="fa-solid fa-person-circle-question"></i><strong><?php echo $task['priority']; ?></strong></span>
-                             <span class="col-6 col-md-3 text-center"><i class="fa-solid fa-hourglass-start"></i><span class="due-date"><?php echo $task['finish_date']; ?></span></span>
+                            <span class="col-6 col-md-3 text-center"><i class="fa-solid fa-hourglass-start"></i><span class="due-date"><?php echo $task['finish_date']; ?></span></span>
                         </button>
                     </h2>
                  </div>
@@ -37,6 +37,37 @@ ob_start();
     </div>
 </div>
 
+    <script>    // countdown:
+        function updateRemainingTime(){
+
+             const dueDateElements = document.querySelectorAll('.due-date');
+
+             const now = new Date();
+
+             dueDateElements.forEach((element) => {
+                 const dueDate = new Date(element.textContent);
+                 const timeDiff = dueDate - now;
+
+                 if(timeDiff > 0) {
+                     const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                     const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                     const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+                     // element.textContent = `Days: ${days} Hours: ${hours} Minutes: ${minutes}`;
+                     element.textContent = `Days: ${days} Hours: ${hours}`;
+
+                 } else{
+                     element.textContent = 'Time is up';
+                 }
+             });
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            updateRemainingTime();
+            setInterval(updateRemainingTime, 60000); // update every minute
+        });
+
+    </script>
 
 <?php $content = ob_get_clean();
 

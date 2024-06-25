@@ -15,8 +15,9 @@ function is_active($path): string
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<!--    <link rel="stylesheet" href="/app/css/style.css">-->
-
+    <link rel="stylesheet" href="/app/css/style.css">
+    <script src="https://kit.fontawesome.com/d9195b3006.js" crossorigin="anonymous"></script>
+<!--    style="margin-left: 46px;"-->
 </head>
 <body>
 <div class="container">
@@ -55,7 +56,7 @@ function is_active($path): string
                     </a>
                 </li>
                 <hr>
-                <h4 style="margin-left: 46px;">To do list</h4>
+                <h4>To do list</h4>
                 <li>
                     <a href="/todo/category" class="nav-link text-white <?= is_active('/todo/category') ?>">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="/todo/category"></use></svg>

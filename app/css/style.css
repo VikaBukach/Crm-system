@@ -1,0 +1,21 @@
+.container .sidebar ul.nav h4{
+    color: #c1c1c1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+h2.accordion-header{
+    width: 100%;
+}
+
+.accordion-header button.accordion-button span{
+    display: inline-block;
+    margin-right: 22px;
+}
+
+.accordion-header button.accordion-button span i{
+    display: inline-block;
+    margin-right: 3px;
+    color: #198754;
+}
