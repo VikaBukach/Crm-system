@@ -67,6 +67,7 @@ class TaskModel
 
     public function createTask($data)
     {
+
         $query = "INSERT INTO todo_list (user_id, title, category_id, status, priority, finish_date) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {

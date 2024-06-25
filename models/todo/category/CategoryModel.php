@@ -55,6 +55,22 @@ class CategoryModel
             return false;
         }
     }
+//for use inside create task
+    public function getAllCategoriesWithUsability()
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM todo_category WHERE user = ? AND usability = 1");
+            $stmt->execute([$this->userID]);
+            $todo_category = [];
+            while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                $todo_category[] = $row;
+            }
+            return $todo_category ?: [];
+        } catch (\PDOException $e) {
+            error_log('Database Error: ' . $e->getMessage());
+            return false;
+        }
+    }
 
     public function createCategory($title, $description, $user_id)
     {

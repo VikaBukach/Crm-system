@@ -28,30 +28,29 @@ class TaskController
         $this->check->requirePermission();
 
         $todoCategoryModel = new CategoryModel();
-        $categories = $todoCategoryModel->getAllCategories();
+        $categories = $todoCategoryModel->getAllCategoriesWithUsability();
 
         include 'app/views/todo/tasks/create.php';
     }
 
     public function store()
     {
+
         $this->check->requirePermission();
 
-        if (isset($_POST['title']) && isset($_POST['description'])) {
-            $title = trim(htmlspecialchars($_POST['title']));
-            $description = trim(htmlspecialchars($_POST['description']));
-            $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+        if (isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])) {
+            $data['title'] = trim($_POST['title']);
+            $data['category_id'] = trim($_POST['category_id']);
+            $data['finish_date'] = trim($_POST['finish_date']);
+            $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+            $data['status'] = 'new';
+            $data['priority'] = 'low';
 
-            if (empty($title) || empty($description)) {
-                echo "TTitle and Description are required";
-                return;
-            }
-
-            $todoCategoryModel = new CategoryModel();
-            $todoCategoryModel->createCategory($title, $description, $user_id);
+            $taskModel = new TaskModel();
+            $taskModel->createTask($data);
         }
 
-        header("Location: /todo/category");
+        header("Location: /todo/tasks");
     }
 
     public function edit($params)

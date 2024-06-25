@@ -24,8 +24,8 @@ ob_start();
                     <p><strong><i class="fa-solid fa-layer-group"></i>Category:</strong> <?php echo htmlspecialchars($task['category_name'] ?? 'N/A'); ?></p>
                     <p><strong><i class="fa-solid fa-battery-three-quarters"></i>Status:</strong> <?php echo htmlspecialchars($task['status']); ?></p>
                     <p><strong><i class="fa-solid fa-person-circle-question"></i>Priority:</strong> <?php echo htmlspecialchars($task['priority']); ?></p>
-                    <p><strong><i class="fa-solid fa-hourglass-start"></i>Due Date:</strong> <?php echo htmlspecialchars($task['finish-date']); ?></p>
-                    <p><strong><i class="fa-solid fa-file-prescription"></i>Description:</strong> <?php echo htmlspecialchars($task['description']) ?? ''; ?></p>
+                    <p><strong><i class="fa-solid fa-hourglass-start"></i>Due Date:</strong> <?php echo htmlspecialchars($task['finish_date']); ?></p>
+                    <p><strong><i class="fa-solid fa-file-prescription"></i>Description:</strong> <?php echo htmlspecialchars($task['description'] ?? ''); ?></p>
                      <div class="d-flex justify-content-end">
                         <a href="edit.php?id=<?php echo $task['id']; ?>" class="btn btn-primary me-2">Edit</a>
                         <button class="btn btn-danger">Delete</button>
