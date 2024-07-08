@@ -3,6 +3,7 @@
 namespace controllers\todo\tasks;
 
 use models\todo\tasks\TaskModel;
+use models\todo\tasks\TagsModel;
 use models\todo\category\CategoryModel;
 use models\Check;
 
@@ -57,15 +58,21 @@ class TaskController
     {
         $this->check->requirePermission();
 
-        $todoCategoryModel = new CategoryModel();
-        $category = $todoCategoryModel->getCategoryById($params['id']);
+        $taskModel = new TaskModel();
+        $task = $taskModel->getTaskById($params['id']);
 
-        if (!$category) {
-            echo "Category not found";
+        $todoCategoryModel = new CategoryModel();
+        $categories = $todoCategoryModel->getAllCategoriesWithUsability();
+
+        if (!$task) {
+            echo "Task not found";
             return;
         }
 
-        include 'app/views/todo/category/edit.php';
+        $tagsModel = new TagsModel();
+        $tags = $tagsModel->getTagsByTaskId($task['id']);
+
+        include 'app/views/todo/tasks/edit.php';
     }
 
     public function update($params)
