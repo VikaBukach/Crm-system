@@ -12,7 +12,7 @@ ob_start();
     <div class="row">
         <div class="col-12 col-md-6 mb-3">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" value="<?= htmlspecialchars($task['title']) ?>" required>
+            <input type="text" class="form-control" name="title" id="title" value="<?= htmlspecialchars($task['title']) ?>" required>
         </div>
 
         <div class="col-12 col-md-6 mb-3">
@@ -38,7 +38,7 @@ ob_start();
             </div>
              <div class="col-12 col-md-6 mb-3">
                 <label for="finish_date">Finish Date</label>
-                <input class="form-control" type="datetime-local" id="finish_date" value="<?= $task['finish_date'] !== null ? htmlspecialchars(str_replace('', 'T', $task['finish_date'])) : '' ?>">
+                <input class="form-control" type="datetime-local" name="finish_date" id="finish_date" value="<?= $task['finish_date'] !== null ? htmlspecialchars(str_replace('', 'T', $task['finish_date'])) : '' ?>">
             </div>
         </div>
 
@@ -81,7 +81,7 @@ ob_start();
                     ?>
                     <input class="form-control" type="text" id="tag-input">
                 </div>
-                <input class="form-control" type="hidden" id="hidden-tags" value="<?= htmlspecialchars(implode(', ', $tagNames)) ?>">
+                <input class="form-control" type="hidden" id="hidden-tags" name="tags" value="<?= htmlspecialchars(implode(', ', $tagNames)) ?>">
             </div>
 
             <div class="col-12 col-md-6 mb-3">
