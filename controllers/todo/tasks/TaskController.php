@@ -19,9 +19,10 @@ class TaskController
     public function index()
     {
         $this->check->requirePermission();
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
         $taskModel = new TaskModel();
-        $tasks = $taskModel->getAllTasks();
+        $tasks = $taskModel->getAllTasksByIdUser($user_id);
 
         include 'app/views/todo/tasks/index.php';
     }
@@ -138,7 +139,6 @@ class TaskController
             //adding new tags and connect with a task
             foreach ($tags as $tag_name){
                 $tag = $this->tagsModel->getTagByNameAndUserId($tag_name, $data['user_id']);
-
                 if(!$tag){
                     $tag_id = $this->tagsModel->addTag($tag_name, $data['user_id']);
                 }else {
