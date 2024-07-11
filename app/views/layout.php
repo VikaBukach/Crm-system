@@ -58,17 +58,36 @@ function is_active($path): string
                 <hr>
                 <h4>To do list</h4>
                 <li>
+                    <a href="/todo/tasks" class="nav-link text-white <?= is_active('/todo/tasks') ?>">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="/todo/tasks"></use></svg>
+                        Opened tasks
+                    </a>
+                </li>
+                <li>
+                    <a href="/todo/tasks/completed" class="nav-link text-white <?= is_active('/todo/tasks/completed') ?>">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="/todo/tasks/completed"></use></svg>
+                        Completed tasks
+                    </a>
+                </li>
+                <li>
+                    <a href="/todo/tasks/expired" class="nav-link text-white <?= is_active('/todo/tasks/expired') ?>">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="/todo/tasks/expired"></use></svg>
+                        Expired tasks
+                    </a>
+                </li>
+                <li>
+                    <a href="/todo/tasks/create" class="nav-link text-white <?= is_active('/todo/tasks/create') ?>">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="/todo/tasks/create"></use></svg>
+                        Create task
+                    </a>
+                </li>
+                <li>
                     <a href="/todo/category" class="nav-link text-white <?= is_active('/todo/category') ?>">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="/todo/category"></use></svg>
                         Category
                     </a>
                 </li>
-                <li>
-                    <a href="/todo/tasks" class="nav-link text-white <?= is_active('/todo/tasks') ?>">
-                        <svg class="bi me-2" width="16" height="16"><use xlink:href="/todo/tasks"></use></svg>
-                        Tasks
-                    </a>
-                </li>
+
             </ul>
                 <hr>
                 <div class="dropdown">
@@ -97,5 +116,7 @@ function is_active($path): string
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="/app/js/script.js"></script>
+
 </body>
 </html>

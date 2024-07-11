@@ -17,7 +17,11 @@ h2.accordion-header{
 .accordion-header button.accordion-button span i{
     display: inline-block;
     margin-right: 3px;
-    color: #198754;
+    color: #f1f1f1;
+}
+
+.accordion-body p span i {
+    margin-right: 5px;
 }
 
 .accordion-button::before {
@@ -35,7 +39,8 @@ h2.accordion-header{
     content: "\f053";
 }
 
-div.tags-container div.tag {
+div.tags-container div.tag,
+.accordion-body p a.tag {
     display: inline-block;
     background: #020202;
     color: #f1f1f1;
@@ -55,3 +60,47 @@ div.tags-container div.tag span {
     display: inline-block;
     padding-right: 10px;
 }
+/*     ========   style tasks ====   */
+.accordion-header button {
+    border-radius: 3px;
+    color: #ffffff !important;
+}
+
+.accordion-header button span {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.accordion-body p a.tag{
+    text-decoration: none;
+}
+
+.accordion-body p a.tag:hover{
+    background: cadetblue;
+}
+
+.filter-priority a {
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.filter-priority a:hover {
+    color: white;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
