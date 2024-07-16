@@ -236,6 +236,27 @@ public function tasksByTag($params)
 
     include 'app/views/todo/tasks/by-tag.php';
 }
+    public function updateStatus($params)
+    {
+        $this->check->requirePermission();
+
+        $datetime = null;
+        $status = $_POST['status'];
+        if($_POST['status']) {
+            if($_POST['status'] === 'completed_at') {
+                $datetime = date("Y-m-d H:i:s");
+            }
+            $taskModel = new TaskModel();
+            $taskModel-> updateTaskStatus($params['id'], $status, $datetime);
+
+            header("Location: /todo/tasks");
+        }else{
+            echo "Status not updated";
+        }
+    }
+
+
+
 }
 
 

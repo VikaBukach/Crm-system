@@ -183,6 +183,35 @@ class TaskModel
             return false;
         }
     }
+    public function updateTaskStatus($id, $status, $datetime)
+    {
+
+        $query = "UPDATE todo_list SET status = :status";
+
+        try {
+            if($datetime !== null){
+                $query .= ", completed_at = :completed_at";
+            } else {
+                $query .= ", completed_at = NULL";
+            }
+            $query .= " WHERE id = :id";
+
+            $stmt = $this->db->prepare($query);
+
+            $params = [':status' => $status, ':id' => $id];
+
+            if($datetime !== null){
+                $params[':completed'] = $datetime;
+            }
+
+            $stmt->execute($params);
+            return $stmt->rowCount() > 0;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+
 }
 
 

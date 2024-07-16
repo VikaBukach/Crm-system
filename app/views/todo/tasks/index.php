@@ -63,6 +63,28 @@ ob_start();
                     </p>
                       <hr>
                      <div class="d-flex justify-content-start action-task">
+
+                         <form action="/todo/tasks/update-status/<?php echo $task['id']; ?>" method="POST" class="me-2">
+                             <input type="hidden" name="status" value="cancelled">
+                             <button type="submit" class="btn <?=$task['status'] == 'cancelled' ? 'btn-warning' : 'btn-secondary'; ?>">Cancelled</button>
+                         </form>
+                         <form action="/todo/tasks/update-status/<?php echo $task['id']; ?>" method="POST" class="me-2">
+                             <input type="hidden" name="status" value="new">
+                             <button type="submit" class="btn <?=$task['status'] == 'new' ? 'btn-warning' : 'btn-secondary'; ?>">New</button>
+                         </form>
+                         <form action="/todo/tasks/update-status/<?php echo $task['id']; ?>" method="POST" class="me-2">
+                             <input type="hidden" name="status" value="in_progress">
+                             <button type="submit" class="btn <?=$task['status'] == 'in_progress' ? 'btn-warning' : 'btn-secondary'; ?>">In progress</button>
+                         </form>
+                         <form action="/todo/tasks/update-status/<?php echo $task['id']; ?>" method="POST" class="me-2">
+                             <input type="hidden" name="status" value="on_hold">
+                             <button type="submit" class="btn <?=$task['status'] == 'on_hold' ? 'btn-warning' : 'btn-secondary'; ?>">On hold</button>
+                         </form>
+                         <form action="/todo/tasks/update-status/<?php echo $task['id']; ?>" method="POST" class="me-2">
+                             <input type="hidden" name="status" value="completed">
+                             <button type="submit" class="btn <?=$task['status'] == 'completed' ? 'btn-warning' : 'btn-secondary'; ?>">Completed</button>
+                         </form>
+                         
                        <a href="/todo/tasks/edit/<?php echo $task['id']; ?>" class="btn btn-primary me-2">Edit</a>
                         <a href="/todo/tasks/delete/<?php echo $task['id']; ?>" class="btn btn-danger me-2">Delete</a>
                     </div>
