@@ -1,21 +1,22 @@
 <?php
 
-$title = 'Todo list completed';
+$title = 'Todo list by tag';
 ob_start();
 ?>
 
-    <h1 class="mb-4">Todo list completed</h1>
-    <div class="d-flex justify-content-around row filter-priority">
+<div class="container">
+    <h1 class="mb-4">Todo list by tag: <span><?= $tagname; ?></span></h1>
+    <div class="flex justify-content-around row filter-priority">
         <a class="btn mb-3 col-2 sort-btn" data-priority="low" style="background: #51A5F4">Low</a>
         <a class="btn mb-3 col-2 sort-btn" data-priority="medium" style="background: #3C7AB5">Medium</a>
         <a class="btn mb-3 col-2 sort-btn" data-priority="high" style="background: #274F75">High</a>
         <a class="btn mb-3 col-2 sort-btn" data-priority="urgent" style="background: #122436">Urgent</a>
     </div>
     <div class="accordion" id="tasks-accordion">
-        <?php foreach ($completedTasks as $task): ?>
+        <?php foreach ($tasksByTag as $key => $task): ?>
             <?php
-            $priorityColor = '';
-            switch ($task['priority']) {
+            $priorityColor ='';
+            switch($task['priority']) {
                 case 'low' :
                     $priorityColor = '#51A5F4';
                     break;
@@ -34,9 +35,9 @@ ob_start();
                 <div class="accordion-header d-flex justify-content-between align-items-center row" id="task<?php echo $task['id']; ?>">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" style="background: <?=$priorityColor ?>;" data-bs-toggle="collapse" data-bs-target="#task-collapse<?php echo $task['id'];?>" aria-expanded="false" aria-controls="task-collapse<?php echo $task['id']; ?>" data-priority="<?php echo $task['priority']; ?>">
-                            <span class="col-12 col-md-5"><i class="fa-solid fa-square-up-right"></i><strong><?php echo $task['title']; ?></strong></span>
-                            <span class="col-5 col-md-3"><i class="fa-solid fa-person-circle-question"></i><strong><?php echo $task['priority']; ?></strong></span>
-                            <span class="col-5 col-md-3"><i class="fa-solid fa-hourglass-start"></i><span class="due-date"><?php echo $task['finish_date']; ?></span></span>
+                            <span class="col-12 col-md-6"><i class="fa-solid fa-square-up-right"></i><strong><?php echo $task['title']; ?></strong></span>
+                            <span class="col-6 col-md-3 text-center"><i class="fa-solid fa-person-circle-question"></i><strong><?php echo $task['status']; ?></strong></span>
+                            <span class="col-6 col-md-3 text-center"><i class="fa-solid fa-hourglass-start"></i><span class="due-date"><?php echo $task['finish_date']; ?></span></span>
                         </button>
                     </h2>
                 </div>
@@ -56,6 +57,7 @@ ob_start();
                                 <a href="/todo/tasks/by-tag/<?=$tag['id'] ?>" class="tag"><?= htmlspecialchars($tag['name']) ?></a>
                             <?php endforeach;?>
                         </p>
+
                         <p class="row">
                             <span class="col-12 col-md-6"><strong><i class="fa-solid fa-file-prescription"></i>Description:</strong> <?php echo htmlspecialchars($task['description'] ?? ''); ?></span>
                         </p>
@@ -64,12 +66,12 @@ ob_start();
                             <a href="/todo/tasks/edit/<?php echo $task['id']; ?>" class="btn btn-primary me-2">Edit</a>
                             <a href="/todo/tasks/delete/<?php echo $task['id']; ?>" class="btn btn-danger me-2">Delete</a>
                         </div>
-                     </div>
+                    </div>
                 </div>
             </div>
         <?php endforeach;?>
     </div>
-
+</div>
 
 <?php $content = ob_get_clean();
 

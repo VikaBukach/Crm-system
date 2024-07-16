@@ -196,8 +196,6 @@ class TaskController
             foreach($oldTags as $oldTag){
                 $this->tagsModel->removeUnusedTag($oldTag['id']);
             }
-
-
         }
 
         header("Location: /todo/tasks");
@@ -211,8 +209,33 @@ class TaskController
         $todoCategoryModel = new CategoryModel();
         $todoCategoryModel->deleteCategory($params['id']);
 
-        header("Location: /todo/category");
+        header("Location: /todo/tasks");
     }
+
+
+public function tasksByTag($params)
+{
+    $this->check->requirePermission();
+
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+    $taskModel = new TaskModel();
+    $tasksByTag = $taskModel->getTasksByTagId($params['id'], $user_id);
+
+    $tagsModel = new TagsModel();
+    $tagname = $tagsModel->getTagNameById($params['id']);
+
+
+    $categoryModel = new CategoryModel();
+
+   //get tags list for each other recording in array
+    foreach($tasksByTag as $key=>$task) {
+        $tasksByTag[$key]['tags'] = $this->tagsModel->getTagsByTaskId($task['task_id']);
+        $tasksByTag[$key]['category'] = $categoryModel->getCategoryById($task['category_id']);
+    }
+
+    include 'app/views/todo/tasks/by-tag.php';
+}
 }
 
 

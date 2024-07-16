@@ -168,6 +168,21 @@ class TaskModel
         }
         return false;
     }
+    public function getTasksByTagId($tag_id, $user_id)
+    {
+
+        $query = "SELECT * FROM todo_list
+        JOIN task_tags ON todo_list.id = task_tags.task_id
+        WHERE task_tags.tag_id = :tag_id AND todo_list.user_id = :user_id ORDER BY ABS(TIMESTAMPDIFF(SECOND, NOW(), finish_date))";
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute(['tag_id' => $tag_id, 'user_id' => $user_id]);
+            $todo_list = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $todo_list ? $todo_list : $todo_list = [];
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
 }
 
 

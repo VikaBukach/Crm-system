@@ -89,6 +89,7 @@ class TagsModel
     }
     public function addTag($tag_name, $user_id)
     {
+        $tag_name = strtolower($tag_name);
         $query = "INSERT INTO tags (name, user_id) VALUE (?, ?)";
 
         try {
@@ -101,7 +102,7 @@ class TagsModel
     }
     public function addTaskTag($task_id, $tag_id)
     {
-        $query = "INSERT INTO task_tags (task_id, tag_id) VALUE (?, ?)";
+        $query = "INSERT INTO task_tags (task_id, tag_id) VALUE (LOWER(?), ?)";
 
         try {
             $stmt = $this->db->prepare($query);
@@ -129,6 +130,19 @@ class TagsModel
         } catch (\PDOException $e) {
         }
         return false;
+    }
+    public function getTagNameById($tag_id)
+    {
+        $query = "SELECT name FROM tags WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$tag_id]);
+            $tag = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $tag ? $tag['name'] : '';
+        } catch (\PDOException $e) {
+            return false;
+        }
     }
 
 }

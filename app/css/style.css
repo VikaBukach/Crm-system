@@ -39,8 +39,10 @@ h2.accordion-header{
     content: "\f053";
 }
 
+/* style tags on  page read tags */
 div.tags-container div.tag,
-.accordion-body p a.tag {
+.accordion-body p a.tag,
+.card-body p a.tag{
     display: inline-block;
     background: #020202;
     color: #f1f1f1;
@@ -71,10 +73,12 @@ div.tags-container div.tag span {
     font-weight: 300;
 }
 
-.accordion-body p a.tag{
+.accordion-body p a.tag,
+.card-body p a.tag {
     text-decoration: none;
 }
 
+.card-body p a.tag:hover,
 .accordion-body p a.tag:hover{
     background: cadetblue;
 }
@@ -90,6 +94,22 @@ div.tags-container div.tag span {
     font-weight: 500;
     text-decoration: underline;
 }
+
+.accordion-header button.accordion-button span {
+    display: inline-block;
+    margin-right: 22px;
+}
+
+.accordion-header button.accordion-button span i {
+    display: inline-block;
+    margin-right: 4px;
+    color: #e2e2e2;
+}
+
+.article .container h1 span {
+    color: coral;
+}
+
 
 
 
