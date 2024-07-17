@@ -22,6 +22,7 @@ class Router{
         '/^\/todo\/tasks(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'todo\tasks\\TaskController'],
         '/^\/todo\/tasks\/by-tag(\/(?P<id>\d+))?$/' => ['controller' => 'todo\tasks\\TaskController', 'action'=> 'tasksByTag'],
         '/^\/todo\/tasks\/update-status(\/(?P<id>\d+))?$/' => ['controller' => 'todo\tasks\\TaskController', 'action'=> 'updateStatus'],
+        '/^\/todo\/tasks\/task(\/(?P<id>\d+))?$/' => ['controller' => 'todo\tasks\\TaskController', 'action'=> 'task'],
 
     ];
 

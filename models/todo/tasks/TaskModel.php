@@ -141,6 +141,20 @@ class TaskModel
             return false;
         }
     }
+    public function getTaskByIdAndByIdUser($id_task, $id_user)
+    {
+
+        $query = "SELECT * FROM todo_list WHERE id = ? AND user_id = ?";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$id_task, $id_user]);
+            $todo_task = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $todo_task ? $todo_task : [];
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
 
     public function updateTask($data)
     {
