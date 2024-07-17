@@ -26,7 +26,7 @@ ob_start();
         </div>
         <div class="col-12 col-md-6 mb-3">
             <label for="finish_date">Finish date</label>
-            <input type="datetime-local" class="form-control" id="finish_date" name="finish_date">
+            <input type="datetime-local" class="form-control" id="finish_date" name="finish_date" placeholder="Select date hour">
         </div>
     </div>
     <button type="submit" class="btn btn-primary">Create task</button>

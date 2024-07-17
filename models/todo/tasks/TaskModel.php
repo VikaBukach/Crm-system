@@ -201,7 +201,7 @@ class TaskModel
             $params = [':status' => $status, ':id' => $id];
 
             if($datetime !== null){
-                $params[':completed'] = $datetime;
+                $params[':completed_at'] = $datetime;
             }
 
             $stmt->execute($params);

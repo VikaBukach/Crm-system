@@ -229,9 +229,9 @@ public function tasksByTag($params)
     $categoryModel = new CategoryModel();
 
    //get tags list for each other recording in array
-    foreach($tasksByTag as $key=>$task) {
-        $tasksByTag[$key]['tags'] = $this->tagsModel->getTagsByTaskId($task['task_id']);
-        $tasksByTag[$key]['category'] = $categoryModel->getCategoryById($task['category_id']);
+    foreach($tasksByTag as &$task) {
+        $task['tags'] = $this->tagsModel->getTagsByTaskId($task['task_id']);
+        $task['category'] = $categoryModel->getCategoryById($task['category_id']);
     }
 
     include 'app/views/todo/tasks/by-tag.php';
