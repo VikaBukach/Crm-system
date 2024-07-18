@@ -109,7 +109,11 @@ div.tags-container div.tag span {
 .article .container h1 span {
     color: coral;
 }
-
+/*     ========   castom the calendar ====   */
+.fc-event:hover {
+    background-color: coral;
+    cursor: pointer;
+}
 
 
 
