@@ -37,8 +37,8 @@ class UsersController
         $this->check->requirePermission();
 
         if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
-            $password = $_POST['password'];
-            $confirm_password = $_POST['confirm_password'];
+            $password = trim($_POST['password']);
+            $confirm_password = trim($_POST['confirm_password']);
 
             if ($password !== $confirm_password) {
                 echo "Passwords do not match";
@@ -47,8 +47,8 @@ class UsersController
 
             $userModel = new User();
             $data = [
-                'username' => $_POST['username'],
-                'email' => $_POST['email'],
+                'username' => trim(htmlspecialchars($_POST['username'])),
+                'email' => trim(htmlspecialchars($_POST['email'])),
                 'password' => $password,
                 'role' => 1,
             ];
@@ -74,18 +74,18 @@ class UsersController
     {
         $this->check->requirePermission();
 
-        if(isset($_POST['role'])){
-            $newRole = $_POST(['role']);
-
-            if($this->check->isCurrentUserRole($newRole)){
-                header("Location: /");
-                exit();
-            }
-        }
-
         $userModel = new User();
         $userModel->update($params['id'], $_POST);
 
+        if(isset($_POST['email'])){
+            $newEmail = trim(htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8'));
+
+            if($newEmail == $_SESSION['user_email']) {
+
+                header("Location: /auth/logout");
+                exit();
+            }
+        }
         header("Location: /users");
     }
 

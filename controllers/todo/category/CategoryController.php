@@ -57,6 +57,13 @@ class CategoryController
         $todoCategoryModel = new CategoryModel();
         $category = $todoCategoryModel->getCategoryById($params['id']);
 
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+        if(!$category || $category['user_id'] != $user_id) {
+            http_response_code(404);
+            include 'app/views/errors/404.php';
+        }
+
         if (!$category) {
             echo "Category not found";
             return;

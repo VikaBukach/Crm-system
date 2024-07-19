@@ -35,7 +35,7 @@ class RoleController
 
         if (isset($_POST['role_name']) && isset($_POST['role_description'])) {
             $role_name = trim(htmlspecialchars($_POST['role_name']));
-            $role_description = trim(html($_POST['role_description']));
+            $role_description = trim(htmlspecialchars($_POST['role_description']));
 
             if (empty($role_name)) {
                 echo "Role name is required";

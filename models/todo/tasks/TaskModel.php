@@ -224,8 +224,6 @@ class TaskModel
             return false;
         }
     }
-
-
 }
 
 

@@ -1,5 +1,4 @@
 <?php
-
 //checking the active menu item
 function is_active($path): string
 {
@@ -7,6 +6,10 @@ function is_active($path): string
     return $path === $currentPath ? 'active' : '';
 }
 ?>
+
+<?php $user_email = isset($_SESSION['user_email']) ? $_SESSION['user_email'] : 'no-name'; ?>
+
+<?php $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : false; ?>
 
 <!doctype html>
 <html lang="en">
@@ -17,7 +20,7 @@ function is_active($path): string
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/app/css/style.css">
     <script src="https://kit.fontawesome.com/d9195b3006.js" crossorigin="anonymous"></script>
-<       <!--    fullcalendar  https://fullcalendar.io/    -->
+    <!--    fullcalendar  https://fullcalendar.io/    -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
         <!--    flatpickr-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -36,6 +39,9 @@ function is_active($path): string
                 <hr>
 
             <ul class="nav nav-pills flex-column mb-auto">
+
+                <?php if($user_role == 5): ?>
+
                 <li class="nav-item">
                     <a href="/" class="nav-link <?= is_active('/') ?>" aria-current="page">
                         <svg class="bi me-2" width="16" height="16"><use xlink:href="/"></use></svg>
@@ -60,6 +66,9 @@ function is_active($path): string
                         Pages
                     </a>
                 </li>
+
+                <?php endif ?>
+
                 <hr>
                 <h4>To do list</h4>
                 <li>
@@ -98,7 +107,7 @@ function is_active($path): string
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img class="rounded-circle me-2" src="https://github.com/VikaBukach/crm_for_teleqram" alt="" width="32" height="32">
-                        <strong>mdo</strong>
+                        <strong><?=$user_email; ?></strong>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item active" href="#">New project...</a></li>

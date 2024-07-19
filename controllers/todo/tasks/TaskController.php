@@ -68,7 +68,6 @@ class TaskController
             $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
             $task['category'] = $categoryModel->getCategoryById($task['category_id']);
         }
-
         include 'app/views/todo/tasks/expired.php';
     }
 
@@ -84,13 +83,12 @@ class TaskController
 
     public function store()
     {
-
         $this->check->requirePermission();
 
         if (isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])) {
-            $data['title'] = trim($_POST['title']);
-            $data['category_id'] = trim($_POST['category_id']);
-            $data['finish_date'] = trim($_POST['finish_date']);
+            $data['title'] = trim(htmlspecialchars($_POST['title']));
+            $data['category_id'] = trim(htmlspecialchars($_POST['category_id']));
+            $data['finish_date'] = trim(htmlspecialchars($_POST['finish_date']));
             $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
             $data['status'] = 'new';
             $data['priority'] = 'low';
@@ -106,9 +104,16 @@ class TaskController
     public function edit($params)
     {
         $this->check->requirePermission();
-
         $taskModel = new TaskModel();
         $task = $taskModel->getTaskById($params['id']);
+
+        $task_id = isset($params['id']) ? intval($params['id']) : 0;
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+        if(!$task || $task['user_id'] != $user_id) {
+            http_response_code(404);
+            include 'app/views/errors/404.php';
+        }
 
         $todoCategoryModel = new CategoryModel();
         $categories = $todoCategoryModel->getAllCategoriesWithUsability();
@@ -129,13 +134,13 @@ class TaskController
 
         if (isset($_POST['id']) && isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])) {
             $data['id'] = trim($_POST['id']);
-            $data['title'] = trim($_POST['title']);
-            $data['category_id'] = trim($_POST['category_id']);
-            $data['finish_date'] = trim($_POST['finish_date']);
-            $data['reminder_at'] = trim($_POST['reminder_at']);
-            $data['status'] = trim($_POST['status']);
-            $data['priority'] = trim($_POST['priority']);
-            $data['description'] = trim($_POST['description']);
+            $data['title'] = trim(htmlspecialchars($_POST['title']));
+            $data['category_id'] = trim(htmlspecialchars($_POST['category_id']));
+            $data['finish_date'] = trim(htmlspecialchars($_POST['finish_date']));
+            $data['reminder_at'] = trim(htmlspecialchars($_POST['reminder_at']));
+            $data['status'] = trim(htmlspecialchars($_POST['status']));
+            $data['priority'] = trim(htmlspecialchars($_POST['priority']));
+            $data['description'] = trim(htmlspecialchars($_POST['description']));
             $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
             $finish_date_value = $data['finish_date'];
@@ -201,7 +206,6 @@ class TaskController
         header("Location: /todo/tasks");
     }
 
-
     public function delete($params)
     {
         $this->check->requirePermission();
@@ -211,7 +215,6 @@ class TaskController
 
         header("Location: /todo/tasks");
     }
-
 
 public function tasksByTag($params)
 {
@@ -241,7 +244,7 @@ public function tasksByTag($params)
         $this->check->requirePermission();
 
         $datetime = null;
-        $status = $_POST['status'];
+        $status = trim(htmlspecialchars($_POST['status']));
         if($_POST['status']) {
             if($_POST['status'] === 'completed_at') {
                 $datetime = date("Y-m-d H:i:s");
@@ -258,10 +261,16 @@ public function tasksByTag($params)
     {
         $this->check->requirePermission();
 
+        $task_id = isset($params['id']) ? intval($params['id']) : 0;
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
         $taskModel = new TaskModel();
         $task = $taskModel->getTaskByIdAndByIdUser($params['id'], $user_id);
+
+        if(!$task || $task['user_id'] != $user_id) {
+            http_response_code(404);
+            include 'app/views/errors/404.php';
+        }
 
         $todoCategoryModel = new CategoryModel();
         $category = $todoCategoryModel->getCategoryById($task['category_id']);
@@ -270,14 +279,10 @@ public function tasksByTag($params)
             echo "Task not found";
             return;
         }
-
         $tags = $this->tagsModel->getTagsByTaskId($task['id']);
 
         include 'app/views/todo/tasks/task.php';
     }
-
-
-
 }
 
 

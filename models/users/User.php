@@ -71,7 +71,7 @@ class User
         $username = $data['username'];
         $email = $data['email'];
         $password = $data['password'];
-        $role = $data['role'];
+         $role = $data['role'];
 
         $created_at = date('Y-m-d H:i:s');
 
