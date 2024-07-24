@@ -44,11 +44,15 @@ class Check
 
     public function requirePermission()
     {
+        if(!ENABLE_PERMISSION_CHECK){
+            return;
+        }
+
         $slug = $this->getCurrentUrlSlug();
 
         if(!$this->checkPermission($slug)){
             header("Location: /");
-            exit;
+            exit();
         }
     }
 

@@ -94,7 +94,7 @@ class CategoryModel
             $stmt = $this->db->prepare($query);
             $stmt->execute([$id]);
             $todo_category = $stmt->fetch(\PDO::FETCH_ASSOC);
-            return $todo_category ? $todo_category : false;
+            return $todo_category ? $todo_category : [];
         } catch (\PDOException $e) {
             return false;
         }

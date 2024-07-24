@@ -35,7 +35,6 @@ class TaskModel
             `completed_at` DATETIME,
             `reminder_at` DATETIME,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-            FOREIGN KEY (category_id) REFERENCES todo_category(id) ON DELETE SET NULL,
             FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL
         )";
 

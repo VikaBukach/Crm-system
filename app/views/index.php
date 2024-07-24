@@ -2,6 +2,7 @@
 
 $title = 'Home page';
 ob_start();
+
 ?>
 
 
