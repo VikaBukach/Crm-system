@@ -1,6 +1,6 @@
 <?php
 $title = '404 Not Found';
-ob_stqrt();
+ob_start();
 ?>
 
 <h1>404</h1>

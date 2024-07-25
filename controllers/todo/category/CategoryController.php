@@ -2,13 +2,15 @@
 
 namespace controllers\todo\category;
 
+use models\Database;
 use models\todo\category\CategoryModel;
 use models\Check;
 
 class CategoryController
 {
     private $check;
-    public function __construct(){
+    public function __construct()
+    {
         $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
         $this->check = new Check($userRole);
     }
@@ -59,9 +61,10 @@ class CategoryController
 
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
-        if(!$category || $category['user_id'] != $user_id) {
+        if(!$category || $category['user'] != $user_id) {
             http_response_code(404);
             include 'app/views/errors/404.php';
+            return;
         }
 
         if (!$category) {

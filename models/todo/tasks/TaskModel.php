@@ -74,9 +74,9 @@ class TaskModel
                 $todo_list[] = $row;
             }
 
-            return $todo_list ?: [];
+            return $todo_list ? $todo_list : [];
         } catch (\PDOException $e) {
-            return false;
+            return [];
         }
     }
     public function getAllCompletedTasksByIdUser($user_id)
@@ -90,9 +90,9 @@ class TaskModel
                 $todo_list[] = $row;
             }
 
-            return $todo_list ?: [];
+            return $todo_list ? $todo_list : [];
         } catch (\PDOException $e) {
-            return false;
+            return [];
         }
     }
     public function getAllExpiredTasksByIdUser($user_id)
@@ -106,9 +106,9 @@ class TaskModel
                 $todo_list[] = $row;
             }
 
-            return $todo_list ?: [];
+            return $todo_list ? $todo_list : [];
         } catch (\PDOException $e) {
-            return false;
+            return [];
         }
     }
 
