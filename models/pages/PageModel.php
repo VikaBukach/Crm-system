@@ -79,6 +79,7 @@ class PageModel
         (35, 'Tasks completed', 'todo/tasks/completed', '3,4,5', '2024-07-22 13:44:02', '2024-07-22 13:44:02'),
         (36, 'Expired tasks', 'todo/tasks/expired', '3,4,5', '2024-07-22 13:44:02', '2024-07-22 13:44:02');";
 
+
         try {
             $this->db->exec($insertPagesQuery);
             return true;
