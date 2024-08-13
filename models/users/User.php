@@ -55,7 +55,7 @@ class User
              FOREIGN KEY (`role`) REFERENCES `roles`(`id`)
         );";
 
-        //creating the table foe OTP codes:
+        //create the table for OTP codes:
 
         $OTPTableQuery = "CREATE TABLE IF NOT EXISTS `otp_codes`(
              `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -66,10 +66,35 @@ class User
              FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
             );";
 
+        //create the table for save states of users:
+
+        $userStatesQuery = "CREATE TABLE IF NOT EXISTS `user_states`(
+             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+             `chat_id` INT(11) NOT NULL,
+             `user_id` INT(11) DEFAULT NULL,
+             `state` VARCHAR(255) NOT NULL,
+             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+             `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT-TIMESTAMP,
+             UNIQUE INDEX(chat_id)
+            );";
+
+        //create the table for users of the telegram :
+
+        $userTelegramQuery = "CREATE TABLE IF NOT EXISTS `user_telegrams`(
+             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+             `user_id` INT(11) NOT NULL,
+             `telegram_chat_id` VARCHAR(255) NOT NULL,
+             `telegram_username` VARCHAR(255) NOT NULL,
+             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+             FOREIGN_at (`user_id`) REFERENCES `users`(`id`)
+            );";
+
         try {  // request in DB:
             $this->db->exec($roleTableQuery);
             $this->db->exec($userTableQuery);
             $this->db->exec($OTPTableQuery);
+            $this->db->exec($userStatesQuery);
+            $this->db->exec($userTelegramQuery);
 
             //insert records in the 'roles' table:
             if(!$this->rolesExist()){
@@ -192,17 +217,71 @@ class User
         }
     }
 
-    public function grtLastOtpCodeByUserId($user_id)
+    public function getLastOtpCodeByUserId($user_id)
     {
         $query = "SELECT * FROM otp_codes WHERE user_id = ? ORDER BY created_at DESC LIMIT 1";
 
         try {
             $stmt = $this->db->prepare($query);
             $stmt->execute([$user_id]);
-            $res = $stmt->fetch(\PDO::FETCH_ASSOC);
-            return $res;
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             return false;
         }
     }
+
+    //get users state for authorization through the telegram
+    public function getUserState($chatId)
+    {
+        $query = "SELECT * FROM user_states WHERE chat_id = ?";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$chatId]);
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    // record user`s state for authorization through the telegram
+    public function setUserState($chatId, $state, $userId = null)
+    {
+        $query = "INSERT INTO user_states (chat_id, state, user_id) VALUES (?, ?, ?)
+            ON DUPLICATE KEY UPDATE state = ?, user_id = ?";
+        try{
+            $stmt= $this->db->prepare($query);
+            $stmt->execute([$chatId, $state, $userId, $state, $userId]);
+        }catch(\PDOException $e){
+            return false;
+        }
+    }
+
+
+    //get info about user to his ID and otp password
+    public function getOtpInfoByUserIdAndCode($user_id, $otpCode)
+    {
+        $query = "SELECT * FROM otp_codes WHERE user_id = ? AND otp_code = ? AND created_at >= DATE_SUB(NOW(), INTERVAL 60 MINUTE)";
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$user_id, $otpCode]);
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e){
+            return false;
+        }
+    }
+
+    // create user of Tg + crm
+    public function createUserTelegram($user_id, $chatId, $username)
+    {
+        $query = "INSERT INTO * FROM users_telegrams (user_id, telegram_chat_id, telegram_username) VALUES (?, ?, ?)";
+        try {
+            $stmt = $this->db->prepare($query);
+            return $stmt->execute([$user_id,  $chatId, $username]);
+        } catch (\PDOException $e){
+            return false;
+        }
+    }
+
+
 }

@@ -45,15 +45,25 @@ ob_start();
 
     <h3 class="mb-4">One-time password generation</h3>
     <h5>Yor otp code: <?=$otp;?></h5>
-    <p>Go to link and will found the bot in search: <a target="_blank" href="https://t.me/myDevCRM_bot">@myDevCRM_bot</a>Enter the command <strong></strong></p>
+    <ul class="list-group">
+        <li class="list-group-item">Press<strong>Save the password</strong></li>
+        <li class="list-group-item">Go to in the Telegram and search the bot: <a target="_blank" href="https://t.me/myDevCRM_bot">@myDevCRM_bot</a>.</li>
+        <li class="list-group-item">Enter the command /email/</li>
+        <li class="list-group-item">The bot will request the OTP code, here is: <strong><?php echo $user['email']; ?></strong> </li>
+        <li class="list-group-item">The bot will request your email, here is: <strong><?php echo $otp; ?></strong> </li>
+        <li class="list-group-item">If you have done this, your accounts will be linked</li>
+    </ul>
+
     <?php if($visible): ?>
-    <p>your otp code will writting in DB</p>
+    <p style="color:olivedrab"> This OTP code will writting in DB before "Save the password" and will be available for authorization 1 hour</p>
 
     <form action="/users/otpstore" method="POST">
         <input type="hidden" name="otp" value="<?=$otp;?>">
         <input type="hidden" name="user_id" value="<?=$_SESSION['user_id'];?>">
         <button class="btn btn-primary" type="submit">Save the password</button>
     </form>
+    <?php else: ?>
+
     <?php endif ?>
 </div>
 
