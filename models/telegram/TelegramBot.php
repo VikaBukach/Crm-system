@@ -21,6 +21,7 @@ class TelegramBot{
         //generation data for POST request:
         $postData = [
             'chat_id' => $chatId,
+            'parse_mode' => 'HTML',
             'text' => $text,
         ];
 

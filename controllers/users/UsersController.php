@@ -103,7 +103,7 @@ class UsersController
     }
     public function profile()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
         $user_id = $this->userId;
 
         $userModel = new User();

@@ -33,6 +33,10 @@ class CommandHandler
         $tasks = json_decode($tasks, true);
         $obj = $tasks[0];
 
+//        $text = "✋Hello: <b>userTelegram['telegram_username']</b>
+//        All tasks: $obj['all_tasks']
+//        ";
+
 
         return "Hello: " . $userTelegram['telegram_username'] .
             "All tasks: " . $obj['all_tasks'] . "Completed: " . $obj['completed']
