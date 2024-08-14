@@ -22,17 +22,29 @@ class User
     //checking for tables and records availability:
     private function rolesExist()
     {
-        $query = "SELECT COUNT(*) FROM `roles`";
-        $stmt = $this->db->query($query);
-        return $stmt->fetchColumn() > 0;
+         try {
+             $query = "SELECT COUNT(*) FROM `roles`";
+             $stmt = $this->db->query($query);
+             return $stmt->fetchColumn() > 0;
+         }catch(\PDOException $e){
+             return false;
+         }
+
     }
 
     private function adminUserExists()
     {
-        $query = "SELECT COUNT(*) FROM `users` WHERE `username` = 'Admin' AND `is_admin` = 1";
-        $stmt = $this->db->query($query);
-        return $stmt->fetchColumn() > 0;
+        try {
+            $query = "SELECT COUNT(*) FROM `users` WHERE `username` = 'Admin' AND `is_admin` = 1";
+            $stmt = $this->db->query($query);
+            return $stmt->fetchColumn() > 0;
+        }catch(\PDOException $e){
+            return false;
+        }
+
     }
+
+
 
     public function createTable()
     {
@@ -76,7 +88,7 @@ class User
              `user_id` INT(11) DEFAULT NULL,
              `state` VARCHAR(255) NOT NULL,
              `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-             `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT-TIMESTAMP,
+             `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
              UNIQUE INDEX(chat_id)
             );";
 
@@ -88,7 +100,7 @@ class User
              `telegram_chat_id` VARCHAR(255) NOT NULL,
              `telegram_username` VARCHAR(255) NOT NULL,
              `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-             FOREIGN_at (`user_id`) REFERENCES `users`(`id`)
+             FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
             );";
 
         try {  // request in DB:
@@ -98,29 +110,51 @@ class User
             $this->db->exec($userStatesQuery);
             $this->db->exec($userTelegramQuery);
 
-            //insert records in the 'roles' table:
+            //insert defolts 'roles' in the roles table:
             if (!$this->rolesExist()) {
-                $insertRolesQuery = "INSERT INTO `roles` (`role_name`, `role_description`) VALUES 
-                ('Subscriber', 'can only read articles and leave comments, but does not have the right to create own content or manage the site'),                                          
-                ('Editor', 'access to management and publication of articles, pages and other content materials on the site. The editor can also manage comments and allow or prohibit their publication'),                                          
-                ('Author', 'can create and publish his own articles, but he does not have the ability to manage them content of other users'),                                          
-                ('Contributor', 'can create their own articles, but they cannot be published until approved by an administrator or editor'),                                          
-                ('Administrator', 'full access to all site functions, including user management, plugins, as well as creating and publishing articles');";
-                $this->db->exec($insertRolesQuery);
+                $this->insertDefaultRoles();
             }
 
-            //insert record in 'users' table:
+            //insert record about admin in 'users' table:
             if (!$this->adminUserExists()) {
-                $insertAdminQuery = "INSERT INTO `users` (`username`, `email`, `password`, `is_admin`, `role`) VALUES 
-                ('Admin', 'admin@gmail.com', '\$2y\$10\$se6VOpWD4H7DInxrtwCF3evkxF609.sGqax.k12RkGtbLWteGO6eS', 1, (SELECT `id` FROM `roles` WHERE `role_name` = 'Administrator' ));";
-                $this->db->exec($insertAdminQuery);
+                $this->insertAdminUser();
             }
 
             return true;
         } catch (\PDOException $e) {
+            echo "Error creating tables or inserting data: " . $e->getMessage();
             return false;
         }
     }
+
+    private function insertDefaultRoles()
+    {
+        $insertRolesQuery = "INSERT INTO `roles` (`role_name`, `role_description`) VALUES
+                ('Subscriber', 'can only read articles and leave comments, but does not have the right to create own content or manage the site'),
+                ('Editor', 'access to management and publication of articles, pages and other content materials on the site. The editor can also manage comments and allow or prohibit their publication'),
+                ('Author', 'can create and publish his own articles, but he does not have the ability to manage them content of other users'),
+                ('Contributor', 'can create their own articles, but they cannot be published until approved by an administrator or editor'),
+                ('Administrator', 'full access to all site functions, including user management, plugins, as well as creating and publishing articles');";
+
+        try {
+            $this->db->exec($insertRolesQuery);
+        } catch(\PDOException $e){
+            echo "Error inserting roles:" . $e->getMessage();
+        }
+    }
+
+    private function insertAdminUser()
+    {
+        $insertAdminQuery = "INSERT INTO `users` (`username`, `email`, `password`, `is_admin`, `role`) VALUES
+                ('Admin', 'admin@gmail.com', '\$2y\$10\$se6VOpWD4H7DInxrtwCF3evkxF609.sGqax.k12RkGtbLWteGO6eS', 1, (SELECT `id` FROM `roles` WHERE `role_name` = 'Administrator' ));";
+
+        try {
+            $this->db->exec($insertAdminQuery);
+        } catch(\PDOException $e) {
+            echo "Error inserting admin user:" . $e->getMessage();
+        }
+    }
+
 
     public function readAll()
     {
@@ -208,7 +242,7 @@ class User
         $otp = $data['otp'];
         $created_at = date('Y-m-d H:i:s');
 
-        $query = "INSERT INTO otp_codes (username, email, password, role, created_at) VALUES (?,?,?,?,?)";
+        $query = "INSERT INTO otp_codes (user_id, otp_code, created_at) VALUES (?,?,?)";
 
         try {
             $stmt = $this->db->prepare($query);

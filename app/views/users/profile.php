@@ -48,7 +48,7 @@ ob_start();
                 </tr>
                 <tr>
                     <th scope="row">Role</th>
-                    <td><?php echo $user['role']; ?></td>
+                    <td><?php echo $role['role_name']; ?></td>
                 </tr>
                 <tr>
                     <th scope="row">Created date</th>

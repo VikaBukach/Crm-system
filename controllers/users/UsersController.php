@@ -7,7 +7,7 @@ use models\users\User;
 use models\Check;
 
 //One-time password generation for connect telegram account
-function generateOTP(){
+function generateOTP(){  //One-time password generation for connect telegram account
     $otp = rand(1000000, 9999999);
     return $otp;
 }
@@ -113,6 +113,10 @@ class UsersController
 
         $userModel = new User();
         $user = $userModel->read($user_id);
+
+        $roleModel = new Role();
+        $role = $roleModel->getRoleById($user['role']);
+
 
         $otpArr = $userModel->getLastOtpCodeByUserId($user_id);
         $isUserTelegram = $userModel->getInfoByUserIdFromTelegramTable($user_id);
