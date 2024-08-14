@@ -103,20 +103,17 @@ class UsersController
     }
     public function profile()
     {
-//        $this->check->requirePermission();
+        $this->check->requirePermission();
         $user_id = $this->userId;
 
         $userModel = new User();
         $user = $userModel->read($user_id);
 
-        $roleModel = new Role();
-        $role = $roleModel->getRoleById($user['role']);
+        $otpArr = $userModel->getLastOtpCodeByUserId($user_id);
+        $isUserTelegram = $userModel->getInfoByUserIdFromTelegramTable($user_id);
 
-        $otp = generateOTP();
-
-        $otpLastStr = $userModel->grtLastOtpCodeByUserId($user_id);
-        if($otpLastStr){
-            $otpCreated = new \DateTime($otpLastStr['created_at']);
+        if($otpArr){
+            $otpCreated = new \DateTime($otpArr['created_at']);
             $currentTime = new \DateTime();
             $interval = $otpCreated->diff($currentTime);
 
@@ -129,7 +126,7 @@ class UsersController
                 $otp = generateOTP();
                 $visible = true;
             }else{
-                $otp = $otpLastStr['otp_code'];
+                $otp = $otpArr['otp_code'];
                 $visible = false;
             }
 
@@ -137,8 +134,6 @@ class UsersController
             $otp = generateOTP();
             $visible = true;
         }
-
-
         include 'app/views/users/profile.php';
     }
 

@@ -20,16 +20,18 @@ class User
     }
 
     //checking for tables and records availability:
-    private function rolesExist(){
+    private function rolesExist()
+    {
         $query = "SELECT COUNT(*) FROM `roles`";
         $stmt = $this->db->query($query);
-        return $stmt->fetchColumn() >0;
+        return $stmt->fetchColumn() > 0;
     }
 
-    private function adminUserExists(){
+    private function adminUserExists()
+    {
         $query = "SELECT COUNT(*) FROM `users` WHERE `username` = 'Admin' AND `is_admin` = 1";
         $stmt = $this->db->query($query);
-        return $stmt->fetchColumn() >0;
+        return $stmt->fetchColumn() > 0;
     }
 
     public function createTable()
@@ -97,7 +99,7 @@ class User
             $this->db->exec($userTelegramQuery);
 
             //insert records in the 'roles' table:
-            if(!$this->rolesExist()){
+            if (!$this->rolesExist()) {
                 $insertRolesQuery = "INSERT INTO `roles` (`role_name`, `role_description`) VALUES 
                 ('Subscriber', 'can only read articles and leave comments, but does not have the right to create own content or manage the site'),                                          
                 ('Editor', 'access to management and publication of articles, pages and other content materials on the site. The editor can also manage comments and allow or prohibit their publication'),                                          
@@ -140,7 +142,7 @@ class User
         $username = $data['username'];
         $email = $data['email'];
         $password = $data['password'];
-         $role = $data['role'];
+        $role = $data['role'];
 
         $created_at = date('Y-m-d H:i:s');
 
@@ -249,10 +251,10 @@ class User
     {
         $query = "INSERT INTO user_states (chat_id, state, user_id) VALUES (?, ?, ?)
             ON DUPLICATE KEY UPDATE state = ?, user_id = ?";
-        try{
-            $stmt= $this->db->prepare($query);
+        try {
+            $stmt = $this->db->prepare($query);
             $stmt->execute([$chatId, $state, $userId, $state, $userId]);
-        }catch(\PDOException $e){
+        } catch (\PDOException $e) {
             return false;
         }
     }
@@ -266,7 +268,7 @@ class User
             $stmt = $this->db->prepare($query);
             $stmt->execute([$user_id, $otpCode]);
             return $stmt->fetch(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e){
+        } catch (\PDOException $e) {
             return false;
         }
     }
@@ -277,8 +279,38 @@ class User
         $query = "INSERT INTO * FROM users_telegrams (user_id, telegram_chat_id, telegram_username) VALUES (?, ?, ?)";
         try {
             $stmt = $this->db->prepare($query);
-            return $stmt->execute([$user_id,  $chatId, $username]);
-        } catch (\PDOException $e){
+            return $stmt->execute([$user_id, $chatId, $username]);
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+//get info about user from 'user_telegrams' tables
+    public function getInfoByUserIdFromTelegramTable($user_id)
+    {
+        $query = "SELECT * FROM user_telegrams WHERE user_id = ?";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$user_id]);
+            $res = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch(\PDOException $e){
+            return false;
+        }
+    }
+
+    //get info about user to telegram_chat_id from 'user_telegrams' tables
+    public function getUserByTelegramChatId($telegram_chat_id)
+    {
+        $query = "SELECT * FROM user_telegrams WHERE telegram_chat_id = ?";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$telegram_chat_id]);
+            $res = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $res;
+        } catch(\PDOException $e){
             return false;
         }
     }

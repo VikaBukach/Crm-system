@@ -25,6 +25,11 @@ ob_start();
                     <td><?php echo $user['email_verification'] ? 'Yes' : 'No'; ?></td>
                 </tr>
                 <tr>
+                <tr>
+                    <th scope="row">The account was linked to Telegram</th>
+                    <td><?php echo $isUserTelegram['telegram_username'] ? $isUserTelegram['telegram_username'] : 'No'; ?></td>
+                </tr>
+                <tr>
                     <th scope="row">Admin</th>
                     <td><?php echo $user['is_admin'] ? 'Yes' : 'No'; ?></td>
                 </tr>
@@ -41,6 +46,7 @@ ob_start();
         </div>
     </div>
 
+    <?php if(!$isUserTelegram): ?>
     <hr class="mt-5">
 
     <h3 class="mb-4">One-time password generation</h3>
@@ -62,8 +68,7 @@ ob_start();
         <input type="hidden" name="user_id" value="<?=$_SESSION['user_id'];?>">
         <button class="btn btn-primary" type="submit">Save the password</button>
     </form>
-    <?php else: ?>
-
+    <?php endif ?>
     <?php endif ?>
 </div>
 
