@@ -27,7 +27,16 @@ ob_start();
                 <tr>
                 <tr>
                     <th scope="row">The account was linked to Telegram</th>
-                    <td><?php echo $isUserTelegram['telegram_username'] ? $isUserTelegram['telegram_username'] : 'No'; ?></td>
+<!--                    <td>--><?php //echo $isUserTelegram['telegram_username'] ? $isUserTelegram['telegram_username'] : 'No'; ?><!--</td>-->
+                    <td>
+                        <?php
+                        if (is_array($isUserTelegram) && isset($isUserTelegram['telegram_username'])) {
+                            echo $isUserTelegram['telegram_username'];
+                        } else {
+                            echo 'No';
+                        }
+                        ?>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Admin</th>
