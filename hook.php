@@ -14,7 +14,7 @@ use models\telegram\TelegramBot;
 $botApiKey = TELEGRAM_BOT_API_KEY;
 $telegramBot = new TelegramBot($botApiKey);
 
-$content = file_get_contents('php//input');
+$content = file_get_contents('php://input');
 $update = json_decode($content, true);
 
 $telegramBot->handleUpdate($update);

@@ -77,7 +77,9 @@ class PageModel
         (33, 'Todo tasks task', 'todo/tasks/task','2,3,4,5', '2024-07-22 13:43:23','2024-07-22 13:43:23'),
         (34, 'Todo tasks by tag', 'todo/tasks/by-tag', '2,3,4,5', '2024-07-22 13:44:02', '2024-07-22 13:44:02'),
         (35, 'Tasks completed', 'todo/tasks/completed', '3,4,5', '2024-07-22 13:44:02', '2024-07-22 13:44:02'),
-        (36, 'Expired tasks', 'todo/tasks/expired', '3,4,5', '2024-07-22 13:44:02', '2024-07-22 13:44:02');";
+        (36, 'User profile', 'users/profile', '1,2,3,4,5', '2024-07-22 13:44:02', '2024-07-22 13:44:02'),
+        (37, 'User OTP store', 'users/otpstore', '1,2,3,4,5', '2024-07-22 13:44:02', '2024-07-22 13:44:02'),
+        (38, 'Expired tasks', 'todo/tasks/expired', '3,4,5', '2024-07-22 13:44:02', '2024-07-22 13:44:02');";
 
 
         try {
