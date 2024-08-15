@@ -128,8 +128,8 @@ class UsersController
 
             $secondsDifference = $interval->days * 24 * 60 * 60;
             $secondsDifference += $interval->h * 60 * 60;
-            $secondsDifference = $interval->i * 60;
-            $secondsDifference = $interval->s;
+            $secondsDifference += $interval->i * 60;
+            $secondsDifference += $interval->s;
 
             if($secondsDifference > 3600) {
                 $otp = generateOTP();
@@ -162,7 +162,7 @@ class UsersController
             $userModel->writeOTPCodeByUserId($data);
         }
 
-        header("Location: /users/profile.php");
+        header("Location: /users/profile");
     }
 
 }

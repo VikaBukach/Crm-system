@@ -29,7 +29,6 @@ class User
          }catch(\PDOException $e){
              return false;
          }
-
     }
 
     private function adminUserExists()
@@ -41,10 +40,7 @@ class User
         }catch(\PDOException $e){
             return false;
         }
-
     }
-
-
 
     public function createTable()
     {
@@ -262,6 +258,7 @@ class User
             $stmt->execute([$user_id]);
             return $stmt->fetch(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
+            error_log("Database error: " . $e->getMessage());
             return false;
         }
     }
