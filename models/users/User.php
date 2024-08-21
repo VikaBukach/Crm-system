@@ -281,7 +281,8 @@ class User
     public function setUserState($chatId, $state, $userId = null)
     {
         $query = "INSERT INTO user_states (chat_id, state, user_id) VALUES (?, ?, ?)
-            ON DUPLICATE KEY UPDATE state = ?, user_id = ?";
+                  ON DUPLICATE KEY UPDATE state = ?, user_id = ?";
+
         try {
             $stmt = $this->db->prepare($query);
             $stmt->execute([$chatId, $state, $userId, $state, $userId]);
@@ -290,6 +291,18 @@ class User
         }
     }
 
+    // get user on email
+    public function getUserByEmail($email)
+    {
+        $query = "SELECT * FROM users WHERE email = ?";
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$email]);
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
 
     //get info about user to his ID and otp password
     public function getOtpInfoByUserIdAndCode($user_id, $otpCode)
@@ -307,7 +320,7 @@ class User
     // create user of Tg + crm
     public function createUserTelegram($user_id, $chatId, $username)
     {
-        $query = "INSERT INTO * FROM users_telegrams (user_id, telegram_chat_id, telegram_username) VALUES (?, ?, ?)";
+        $query = "INSERT INTO users_telegrams (user_id, telegram_chat_id, telegram_username) VALUES (?, ?, ?)";
         try {
             $stmt = $this->db->prepare($query);
             return $stmt->execute([$user_id, $chatId, $username]);

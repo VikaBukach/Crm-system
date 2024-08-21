@@ -56,7 +56,7 @@ class TelegramBot{
         $commandHandler = new CommandHandler();
 
         try{
-            //get current state of user
+            //get current user state
            $userState = $userModel->getUserState($chatId);
            $currentState = $userState ? $userState['state'] : '';
            $user_id = $userState ? $userState['user_id'] : null;
@@ -91,9 +91,10 @@ class TelegramBot{
     {
         if($currentState === 'email') {
             $user = $userModel->getUserByEmail($text);
+
             if($user){
                 $user_id = $user['id'];
-                $response = 'Enter your OTP code to profile...oly numbers';
+                $response = 'Enter your OTP code to profile...only numbers';
                 $userModel->setUserState($chatId, 'otp', $user_id);
             }else{
                 $response = 'No user with this email was found';
@@ -105,17 +106,16 @@ class TelegramBot{
 
             if($otpInfo){
                 $userModel->createUserTelegram($user_id, $chatId, $username);
-                $response = 'Your code was confirmed and your accounts linked';
+                $response = 'Your code was confirmed and your accounts linked.';
                 $userModel->setUserState($chatId, ''); // clean state
             }else {
-                $response = 'The entered code is invalid or ...';
+                $response = 'The entered code is invalid or old.';
             }
         } else {
-            $response = 'I`m understand your your command. ' . $currentState;
+            $response = 'I`m understand your command. ' . $currentState;
         }
         return $response;
     }
-
 
 
 }
