@@ -10,7 +10,7 @@ class CommandHandler
     //methods that corresponds for processing the  commands for the telegram:
     public function handleHelpCommand()
     {
-        return "List if the commands: \n/start - start works\n/email - enter email\n/ - display help";
+        return "List the commands: \n/start - start works\n/email - enter email\n/ - display help";
     }
 
     public function handleEmailCommand()
