@@ -8,9 +8,8 @@ use \models\telegram\CommandHandler;
 class TelegramBot{
  private $botApiKey;
 
- public function __construct(){
+ public function __construct($botApiKey){
      $this->botApiKey = $botApiKey;
-
  }
 
  //method for sending message in the chat with ID and text
@@ -65,7 +64,7 @@ class TelegramBot{
             switch ($text) {
                 case '/start':
                     $response = $commandHandler->handleStartCommand($chatId);
-                    $userModel->setUserState($chatId, 'start');
+                    $userModel->setUserState($chatId, 'email');
                     break;
                 case '/email':
                     $response = $commandHandler->handleEmailCommand($chatId);
@@ -84,6 +83,7 @@ class TelegramBot{
             error_log("Error: " . $e->getMessage() . "\n", 3, 'logs/error.log');
             $response = 'Error. You should try again';
         }
+
         $this->sendTelegramMessage($chatId, $response);
     }
 
@@ -94,7 +94,7 @@ class TelegramBot{
 
             if($user){
                 $user_id = $user['id'];
-                $response = 'Enter your OTP code to profile...only numbers';
+                $response = 'Enter your OTP code...';
                 $userModel->setUserState($chatId, 'otp', $user_id);
             }else{
                 $response = 'No user with this email was found';
