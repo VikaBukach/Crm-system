@@ -42,6 +42,7 @@ class TelegramBot{
     {
      //if not the message, stop processing
         if(!isset($update['message'])){
+            file_put_contents('response.txt', ["if not the message, stop processing"], FILE_APPEND);
             return;
         }
 
@@ -61,10 +62,11 @@ class TelegramBot{
            $user_id = $userState ? $userState['user_id'] : null;
 
            //processing commands and text
+            file_put_contents('response.txt', ["//processing commands and text"], FILE_APPEND);
             switch ($text) {
                 case '/start':
                     $response = $commandHandler->handleStartCommand($chatId);
-                    $userModel->setUserState($chatId, 'email');
+                    $userModel->setUserState($chatId, 'start');
                     break;
                 case '/email':
                     $response = $commandHandler->handleEmailCommand($chatId);

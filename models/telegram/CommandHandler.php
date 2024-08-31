@@ -19,7 +19,7 @@ class CommandHandler
     }
     public function handleStartCommand()
     {
-        return "When you want to use the Bot? your should added the account the tg in the MiniCRM. Will you authorization in the system and go to your profile";
+        return "Do you want to use the bot? You must add your Telegram account to MiniCRM. Log in to the system in the profile section, then execute the command /email";
     }
     public function handleTaskCommand($chat_id)
     {
