@@ -62,7 +62,7 @@ class TelegramBot{
            $user_id = $userState ? $userState['user_id'] : null;
 
            //processing commands and text
-            file_put_contents('response.txt', ["//processing commands and text"], FILE_APPEND);
+//            file_put_contents('response.txt', ["//processing commands and text"], FILE_APPEND);
             switch ($text) {
                 case '/start':
                     $response = $commandHandler->handleStartCommand($chatId);
