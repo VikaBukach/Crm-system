@@ -15,11 +15,11 @@ class CommandHandler
 
     public function handleEmailCommand()
     {
-        return "Enter email from your account miniCRM...";
+        return "Enter email from your account CRM...";
     }
     public function handleStartCommand()
     {
-        return "Do you want to use the bot? You must add your Telegram account to MiniCRM. Log in to the system in the profile section, then execute the command /email";
+        return "To be able to use this bot, you need to link your Telegram account to your crm account. First, go to https://crm-telegram.it-vimax.info and follow the instructions in the profile section.";
     }
     public function handleTaskCommand($chat_id)
     {
