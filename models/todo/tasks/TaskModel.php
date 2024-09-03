@@ -223,7 +223,7 @@ class TaskModel
             return false;
         }
     }
-    public function getTaskCountAndStatusByUserId( $user_id)
+    public function getTaskCountAndStatusByUserId($user_id)
     {
 
         $query = "SELECT
@@ -234,6 +234,7 @@ class TaskModel
         FROM
         todo_lis
         WHERE user_id = :user_id";
+
         try {
             $stmt = $this->db->prepare($query);
             $stmt->execute(['user_id' => $user_id]);

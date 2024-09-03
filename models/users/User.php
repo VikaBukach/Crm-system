@@ -331,7 +331,7 @@ class User
         }
     }
 
-//get info about user from 'user_telegrams' tables
+//get information by user_id about the user from the 'user_telegrams' tables
     public function getInfoByUserIdFromTelegramTable($user_id)
     {
         $query = "SELECT * FROM user_telegrams WHERE user_id = ?";
@@ -346,7 +346,7 @@ class User
         }
     }
 
-    //get info about user to telegram_chat_id from 'user_telegrams' tables
+    //get user information by field telegram_chat_id from table 'user_telegrams'
     public function getUserByTelegramChatId($telegram_chat_id)
     {
         $query = "SELECT * FROM user_telegrams WHERE telegram_chat_id = ?";

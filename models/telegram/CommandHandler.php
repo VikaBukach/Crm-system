@@ -2,10 +2,11 @@
 
 namespace models\telegram;
 
-use models\users\User;
+ use models\users\User;
 use models\todo\tasks\TaskModel;
+ use function Symfony\Component\String\b;
 
-class CommandHandler
+ class CommandHandler
 {
     //methods that corresponds for processing the  commands for the telegram:
     public function handleHelpCommand()
@@ -33,13 +34,20 @@ class CommandHandler
         $tasks = json_decode($tasks, true);
         $obj = $tasks[0];
 
-//        $text = "✋Hello: <b>userTelegram['telegram_username']</b>
-//        All tasks: $obj['all_tasks']
-//        ";
+        $userTelegram = $userTelegram['telegram_username'];
+        $allTasks = $obj['all_tasks'];
+        $opened = $obj['opened'];
+        $completed =  $obj['completed'];
+        $expired = $obj['expired'];
+        
 
+        $text = "👋 Hello,  <b>$userTelegram</b>
+            👨‍💻Your all tasks: <b>$allTasks</b>
+            ❗️Opened: <b>$opened</b>
+            ✅Completed:  <b>$completed</b>
+            👎Expired:  <b>$expired</b>
+            ";
 
-        return "Hello: " . $userTelegram['telegram_username'] .
-            "All tasks: " . $obj['all_tasks'] . "Completed: " . $obj['completed']
-            . "Expired: " . $obj['expired'] . "Opened: " . $obj['opened'];
+            return $text;
     }
 }
