@@ -30,11 +30,8 @@ use models\todo\tasks\TaskModel;
 
         $taskModel = new TaskModel();
         $tasks = $taskModel->getTaskCountAndStatusByUserId($user_id);
-
-        if(empty($tasks)){
-            return "No tasks found for user";
-        }
-
+        $tasks = json_encode($tasks);
+        $tasks = json_decode($tasks, true);
         $obj = $tasks[0];
 
         $userTelegram = $userTelegram['telegram_username'];
