@@ -229,11 +229,11 @@ class TaskModel
         $query = "SELECT
         COUNT(*) AS all_tasks, 
         SUM(status = 'completed') AS completed,
-        SUM(status != 'completed' AND finish_date < NOW() OR status != 'completed' AND finish_date IS NULL) AS expired,
-        SUM(status != 'completed' AND finish_date > NOW() OR status != 'completed' AND finish_date IS NULL) AS opened
-        FROM
-        todo_lis
+        SUM(status != 'completed' AND finish_date < NOW() OR (status != 'completed' AND finish_date IS NULL)) AS expired,
+        SUM(status != 'completed' AND finish_date > NOW() OR (status != 'completed' AND finish_date IS NULL)) AS opened
+        FROM todo_lis
         WHERE user_id = :user_id";
+
 
         try {
             $stmt = $this->db->prepare($query);
