@@ -239,7 +239,7 @@ class TaskModel
             $stmt = $this->db->prepare($query);
             $stmt->execute(['user_id' => $user_id]);
             $todo_list = $stmt->fetch(\PDO::FETCH_ASSOC);
-            return $todo_list ? $todo_list : $todo_list = [];
+            return $todo_list ?: [];
         } catch (\PDOException $e) {
             return [];
         }

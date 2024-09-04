@@ -30,16 +30,15 @@ use models\todo\tasks\TaskModel;
 
         $taskModel = new TaskModel();
         $tasks = $taskModel->getTaskCountAndStatusByUserId($user_id);
+
         $tasks = json_encode($tasks);
         $tasks = json_decode($tasks, true);
-        $obj = $tasks[0];
 
         $userTelegram = $userTelegram['telegram_username'];
-        $allTasks = $obj['all_tasks'];
-        $opened = $obj['opened'];
-        $completed =  $obj['completed'];
-        $expired = $obj['expired'];
-        
+        $allTasks = $tasks['all_tasks'];
+        $opened = $tasks['opened'];
+        $completed =  $tasks['completed'];
+        $expired = $tasks['expired'];
 
         $text = "👋 Hello,  <b>$userTelegram</b>
             👨‍💻Your all tasks: <b>$allTasks</b>
