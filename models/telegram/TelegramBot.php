@@ -68,7 +68,7 @@ class TelegramBot{
                     $response = $commandHandler->handleStartCommand($chatId);
                     $userModel->setUserState($chatId, 'start');
                     break;
-                case '/email':
+                case '/addaccount':
                     $response = $commandHandler->handleEmailCommand($chatId);
                     $userModel->setUserState($chatId, 'email');
                     break;

@@ -66,7 +66,7 @@ ob_start();
     <ul class="list-group">
         <li class="list-group-item">Press <strong>Save the password</strong></li>
         <li class="list-group-item">Go to in the Telegram and search the bot: <a target="_blank" href="https://t.me/myDevCRM_bot">@myDevCRM_bot</a>.</li>
-        <li class="list-group-item">Enter the command /email</li>
+        <li class="list-group-item">Enter the command /help in the bot for start</li>
         <li class="list-group-item">The bot will request your email, here is: <strong><?php echo $user['email']; ?></strong> </li>
         <li class="list-group-item">The bot will request the OTP code, here is: <strong><?php echo $otp; ?></strong> </li>
         <li class="list-group-item">If you have done this, your accounts will be linked</li>

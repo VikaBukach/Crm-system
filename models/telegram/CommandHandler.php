@@ -11,7 +11,7 @@ use models\todo\tasks\TaskModel;
     //methods that corresponds for processing the  commands for the telegram:
     public function handleHelpCommand()
     {
-        return "List the commands: \n/start - start works\n/email - enter email\n/help - display help";
+        return "List the commands: \n/start - start work\n/addaccount - attach the Telegram\n/task - task statuses";
     }
 
     public function handleEmailCommand()
@@ -20,7 +20,7 @@ use models\todo\tasks\TaskModel;
     }
     public function handleStartCommand()
     {
-        return "To be able to use this bot, you need to link your Telegram account to your crm account. First, go to https://crm-telegram.it-vimax.info and follow the instructions in the profile section.";
+        return "To be able to use this bot, you need to link your Telegram account to your crm account. First, go to https://crm-telegram.it-vimax.info and follow the instructions in the profile section. ";
     }
     public function handleTaskCommand($chat_id)
     {
@@ -40,12 +40,17 @@ use models\todo\tasks\TaskModel;
         $completed =  $tasks['completed'];
         $expired = $tasks['expired'];
 
-        $text = "👋 Hello,  <b>$userTelegram</b>
-            👨‍💻Your all tasks: <b>$allTasks</b>
-            ❗️Opened: <b>$opened</b>
-            ✅Completed:  <b>$completed</b>
-            👎Expired:  <b>$expired</b>
-            ";
+        $text = "
+👋 Hello,  <b>$userTelegram</b>
+
+👨‍💻Your all tasks: <b>$allTasks</b>
+
+❗️Opened: <b>$opened</b>
+
+✅Completed:  <b>$completed</b>
+
+👎Expired:  <b>$expired</b>
+        ";
 
             return $text;
     }
