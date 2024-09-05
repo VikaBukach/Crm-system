@@ -38,10 +38,10 @@ class TaskModel
             FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL
         )";
 
-            $remindersTable = "CREATE RABLE IF NOT EXISTS `todo_reminders` (
+            $remindersTable = "CREATE TABLE IF NOT EXISTS `todo_reminders` (
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            `user_id` INT(11) NOT NULL AUTO,       
-            `task_id` INT(11) NOT NULL AUTO,
+            `user_id` INT(11) NOT NULL,       
+            `task_id` INT(11) NOT NULL,
             `reminder_at` DATETIME,
             `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
              FOREIGN KEY (task_id) REFERENCES todo_list(id) ON DELETE CASCADE,
