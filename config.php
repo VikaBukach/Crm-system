@@ -27,6 +27,7 @@ define('DB_HOST', 'mysql');
 define('DB_USER', 'root');
 define('DB_PASS', 'root');
 define('DB_NAME', 'crm_for_tgBot');
+define('REMINDER_DATA', ' + 1 day ');
 
 define('ENABLE_PERMISSION_CHECK', true); //setting the value to false will disable permission checks in controllers
 

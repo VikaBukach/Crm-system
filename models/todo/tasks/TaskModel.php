@@ -126,11 +126,11 @@ class TaskModel
     public function createTask($data)
     {
 
-        $query = "INSERT INTO todo_list (user_id, title, category_id, status, priority, finish_date) VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO todo_list (user_id, title, category_id, status, priority, finish_date, reminder_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$data['user_id'], $data['title'], $data['category_id'], $data['status'], $data['priority'], $data['finish_date']]);
+            $stmt->execute([$data['user_id'], $data['title'], $data['category_id'], $data['status'], $data['priority'], $data['finish_date'], $data['reminder_at']]);
             return true;
         } catch (\PDOException $e) {
             return false;
