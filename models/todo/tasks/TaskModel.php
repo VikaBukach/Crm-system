@@ -38,8 +38,19 @@ class TaskModel
             FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL
         )";
 
+            $remindersTable = "CREATE RABLE IF NOT EXISTS `todo_reminders` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `user_id` INT(11) NOT NULL AUTO,       
+            `task_id` INT(11) NOT NULL AUTO,
+            `reminder_at` DATETIME,
+            `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+             FOREIGN KEY (task_id) REFERENCES todo_list(id) ON DELETE CASCADE,
+             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            )";
+
         try {
             $this->db->exec($query);
+            $this->db->exec($remindersTable);
             return true;
         } catch (\PDOException $e) {
             error_log('Database error:' . $e->getMessage());
