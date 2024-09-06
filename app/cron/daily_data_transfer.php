@@ -7,6 +7,8 @@ require_once '../../autoload.php';
 
 use models\Database;
 
+
+
 $db = Database::getInstance()->getConnection();
 
 try{
@@ -19,11 +21,11 @@ try{
     $tasks = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
     //recording tasks in todo_reminders table
-    $insertQuery = "INSERT INTO 
-        todo_reminders (user_id, task_id, reminder_at) 
-        SELECT :user_id, :task_id, :reminder_at 
-        FROM dual 
-        WHERE 
+    $insertQuery = "INSERT INTO
+        todo_reminders (user_id, task_id, reminder_at)
+        SELECT :user_id, :task_id, :reminder_at
+        FROM dual
+        WHERE
             NOT EXISTS (SELECT * FROM todo_reminders WHERE task_id = :task_id)";
 
     $insertStmt = $db->prepare($insertQuery);
@@ -34,7 +36,12 @@ try{
         $insertStmt->bindParam(':reminder_at', $task['reminder_at']);
         $insertStmt->execute();
     }
-    echo "Tasks have been postponed";
+    //recording logs
+    $logFile = '../../logs/daily_data_transfer.log';
+    $fp = fopen($logFile, 'a');
+    $date = date('Y-m-d H:i:s');
+    fwrite($fp, $date . " (daily_data_transfer.php script was worked)\n");
+    fclose($fp);
 
 }catch(\PDOException $e){
     echo " Error: " . $e->getMessage();

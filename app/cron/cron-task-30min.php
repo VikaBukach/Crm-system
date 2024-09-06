@@ -42,6 +42,12 @@ Link: $taskLink
         $telegramBot = new TelegramBot(TELEGRAM_BOT_API_KEY);
         $telegramBot->sendTelegramMessage($chatId, $text);
     }
+    //recording logs
+    $logFile = '../../logs/cron-task-30min.log';
+    $fp = fopen($logFile, 'a');
+    $date = date('Y-m-d H:i:s');
+    fwrite($fp, $date . " (cron-task-30min.php script was worked)\n");
+    fclose($fp);
 
 }catch(\PDOException $e){
     echo "Error:" . $e->getMessage();
