@@ -17,8 +17,6 @@ try{
 
     $stmt = $db->query($query);
     $tasks = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    $stmt = $db->query($query);
-    $tasks = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
     //recording tasks in todo_reminders table
     $insertQuery = "INSERT INTO
