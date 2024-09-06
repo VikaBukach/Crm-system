@@ -34,8 +34,7 @@ try{
         $insertStmt->bindParam(':reminder_at', $task['reminder_at']);
         $insertStmt->execute();
     }
-    echo "Задачі були перенесені ";
-
+    echo "Tasks have been postponed";
 
 }catch(\PDOException $e){
     echo " Error: " . $e->getMessage();
