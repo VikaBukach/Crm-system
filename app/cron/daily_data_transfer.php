@@ -7,8 +7,6 @@ require_once '../../autoload.php';
 
 use models\Database;
 
-
-
 $db = Database::getInstance()->getConnection();
 
 try{
