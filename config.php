@@ -33,4 +33,4 @@ define('ENABLE_PERMISSION_CHECK', true); //setting the value to false will disab
 
 define('TELEGRAM_BOT_API_KEY', '7280417731:AAH81m6gu8BVol32murTcOG-tUttCQ6xGQw');
 
-define('REMINDER_DATA', ' + 1 day ');
+define('REMINDER_DATA', '');
