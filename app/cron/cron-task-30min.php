@@ -30,7 +30,7 @@ try{
         $taskTitle = $task['title'];
         $finishDate = $task['finish_date'];
         $taskId = $task['task_id'];
-        $taskLink = 'https://crm-telegram.it-vimax.info/todo/tasks' . $taskId;
+        $taskLink = 'https://crm-telegram.it-vimax.info/todo/tasks/task/' . $taskId;
 
         $text = "
 Hello,  <b>$userTelegramName</b>
