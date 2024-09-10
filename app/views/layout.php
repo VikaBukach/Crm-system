@@ -1,4 +1,5 @@
 <?php
+
 //checking the active menu item
 function is_active($path): string
 {

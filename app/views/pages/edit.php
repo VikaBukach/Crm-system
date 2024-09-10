@@ -5,7 +5,6 @@ ob_start();
 
 ?>
 
-
         <h1 class="mb-4">Edit page</h1>
         <form method="POST" action="/pages/update/<?php echo $page['id']; ?>">
             <input type="hidden" name="id" value="<?= $page['id'] ?>">
@@ -19,23 +18,16 @@ ob_start();
             </div>
             <div id="roles-container" class="mb-3">
                     <label for="roles" class="form-label">Roles</label>
-
-                <?php $page_roles = array_map( 'trim',explode(',', $page['role'])); ?>
+                   <?php $page_roles = array_map( 'trim',explode(',', $page['role'])); ?>
                     <?php foreach ($roles as $role): ?>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="roles[]" value="<?php echo $role['id']; ?>" <?php echo in_array($role['role_name'], $page_roles) ? 'checked' : '';?>>
                             <label class="form-check-label" for="roles"><?php echo $role['role_name']; ?></label>
                         </div>
                     <?php endforeach; ?>
-
-
             </div>
-
-
-
-            <button type="submit" class="btn btn-primary">Update page</button>
+        <button type="submit" class="btn btn-primary">Update page</button>
         </form>
-
 
 <?php $content = ob_get_clean();
 

@@ -52,52 +52,42 @@ class QuizController
 
     public function edit($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
-        $roleModel = new Role();
-        $roles = $roleModel->getAllRoles();
+        $quizModel = new QuizModel();
+        $quiz = $quizModel->getQuizById($params['id']);
 
-        $pageModel = new PageModel();
-        $page = $pageModel->getPageById($params['id']);
-
-        if (!$page) {
-            echo "Page not found";
-            return;
-        }
-
-        include 'app/views/pages/edit.php';
+        include 'app/views/quiz/edit.php';
     }
 
     public function update($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
-        if (isset($params['id']) && isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['roles']) ) {
-            $id = trim($params['id']);
-            $title = trim(htmlspecialchars($_POST['title']));
-            $slug = trim(htmlspecialchars($_POST['slug']));
-            $roles = filter_var_array($_POST['roles'], FILTER_SANITIZE_NUMBER_INT);
-            $roles = implode("," ,$roles);
-
-            if (empty($title) || empty($slug) || empty($roles)) {
-                echo "Title, Slug and Roles fields are required";
-                return;
-            }
-
-            $pageModel = new PageModel();
-            $pageModel->updatePage($id, $title, $slug, $roles);
+        if (isset($_POST['question']) && isset($_POST['answer_1']) && isset($_POST['answer_2']) && isset($_POST['answer_3'])&& isset($_POST['correct_answer'])) {
+            $data['id'] = $_POST['id'];
+            $data['question'] = trim(htmlspecialchars($_POST['question']));
+            $data['answer_1'] = trim(htmlspecialchars($_POST['answer_1']));
+            $data['answer_2'] = trim(htmlspecialchars($_POST['answer_2']));
+            $data['answer_3'] = trim(htmlspecialchars($_POST['answer_3']));
+            $data['correct_answer'] = trim(htmlspecialchars($_POST['correct_answer']));
+            $data['explanation'] = trim(htmlspecialchars($_POST['explanation'])) ? trim(htmlspecialchars($_POST['explanation'])) : '';
+tte($data);
+            $quizModel = new QuizModel();
+            $quizModel->updateQuiz($data);
         }
-        header("Location: /pages");
+
+        header("Location: /quiz");
     }
 
     public function delete($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
-        $pageModel = new PageModel();
-        $pageModel->deletePage($params['id']);
+        $quizModel = new QuizModel();
+        $quizes = $quizModel->deleteById($params['id']);
 
-        header("Location: /pages");
+        header("Location: /quiz");
     }
 }
 

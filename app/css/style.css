@@ -120,8 +120,11 @@ div.tags-container div.tag span {
 /*     ========   styles for quiz:      ====   */
 
 .quiz .accordion-item h2 button span strong{
-    color: olivedrab;
+    color:olivedrab;
     font-weight: 600;
+}
+.quiz .accordion-header button.accordion-button span i{
+    color:darkgreen;
 }
 
 

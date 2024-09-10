@@ -57,7 +57,6 @@ class QuizModel
         }
     }
 
-
     public function createQuiz($data)
     {
 //        tte($data);
@@ -82,13 +81,35 @@ class QuizModel
             return false;
         }
     }
-
-    public function updatePage($id, $title, $slug, $roles)
+    public function getQuizById($id)
     {
-        $query = "UPDATE pages SET title = ?, slug = ?, role = ?  WHERE id = ?";
+        $query = "SELECT * FROM quiz_questions WHERE id = ?";
+
         try {
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$title, $slug, $roles, $id]);
+            $stmt->execute([$id]);
+            $quiz = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            return $quiz ? $quiz : false;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function updateQuiz($data)
+    {
+        $query = "UPDATE quiz_questions SET question = ?, answer_1 = ?, answer_2 = ?, answer_3 = ?, correct_answer = ?, explanation = ?  WHERE id = ?";
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([
+                $data['question'],
+                $data['answer_1'],
+                $data['answer_2'],
+                $data['answer_3'],
+                $data['correct_answer'],
+                $data['explanation'],
+                $data['id']
+            ]);
 
             return true;
         } catch (\PDOException $e) {
@@ -96,9 +117,9 @@ class QuizModel
         }
     }
 
-    public function deletePage($id)
+    public function deleteById($id)
     {
-        $query = "DELETE FROM pages WHERE id = ?";
+        $query = "DELETE FROM quiz_questions WHERE id = ?";
 
         try {
             $stmt = $this->db->prepare($query);
