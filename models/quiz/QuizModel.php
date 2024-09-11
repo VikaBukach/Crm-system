@@ -34,8 +34,15 @@ class QuizModel
              `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         );";
 
+        $telegramQueryQuiz = "CREATE TABLE IF NOT EXISTS telegram_quiz_questions(
+             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+             `quiz_question_id` INT(11) NOT NULL,
+             `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+        );";
+
         try {  //запит у БД
             $this->db->exec($quizTableQuery);
+            $this->db->exec($telegramQueryQuiz);
             return true;
         } catch (\PDOException $e) {
             return false;
@@ -139,6 +146,20 @@ class QuizModel
         return $results;
     }
 
+    public function getRandomQuiz()
+    {
+        $query = "SELECT * FROM quiz_questions ORDER BY RAND() LIMIT 1";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            $quiz = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            return $quiz ? $quiz : [];
+        } catch (\PDOException $e) {
+            return [];
+        }
+    }
 
 }
 
