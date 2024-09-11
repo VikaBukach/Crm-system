@@ -20,7 +20,7 @@ ob_start();
         <input type="text" class="form-control" id="answer_2" name="answer_2" required>
     </div>
     <div class="form-group mb-3">
-        <label for="answer_3">Answer 1:</label>
+        <label for="answer_3">Answer 3:</label>
         <input type="text" class="form-control" id="answer_3" name="answer_3" required>
     </div>
 
@@ -38,6 +38,53 @@ ob_start();
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
+
+<script>
+    const questionInput = document.getElementById('question');
+    const suggestionsContainer = document.querySelector('.question-suggestions');
+
+    questionInput.addEventListener('input', (event) => {
+        const inputValue = event.target.value;
+        if(inputValue.length < 3){
+            suggestionsContainer.innerHTML = '';
+            suggestionsContainer.style.display = 'none';
+            return;
+        }
+
+        fetch(`/quiz/search`, {
+            method: 'POST',
+            body: JSON.stringify({question: inputValue}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                //clean container
+                suggestionsContainer.innerHTML = '';
+                //if there is a match we display them in container
+                if (data.length > 0) {
+                    const ul = document.createElement('ul');
+                    data.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item.question;
+                        li.addEventListener('click', () => {
+                            questionInput.value = item.question;
+                            suggestionsContainer.style.display = 'none';
+                        });
+                        ul.appendChild(li);
+                    });
+                    suggestionsContainer.appendChild(ul);
+                    suggestionsContainer.style.display = 'block';
+                }else {
+                    suggestionsContainer.style.display = 'none';
+                }
+            })
+            .catch(error => console.error(error));
+    });
+</script>
+
 
 <?php $content = ob_get_clean();
 

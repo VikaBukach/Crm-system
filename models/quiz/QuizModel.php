@@ -99,6 +99,7 @@ class QuizModel
     public function updateQuiz($data)
     {
         $query = "UPDATE quiz_questions SET question = ?, answer_1 = ?, answer_2 = ?, answer_3 = ?, correct_answer = ?, explanation = ?  WHERE id = ?";
+
         try {
             $stmt = $this->db->prepare($query);
             $stmt->execute([
@@ -128,6 +129,14 @@ class QuizModel
         } catch (\PDOException $e) {
         }
         return false;
+    }
+
+    public function searchQuestions($search){
+        $query = "SELECT question FROM quiz_questions WHERE question LIKE :search LIMIT 10";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['search' => "%{$search}%"]);
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $results;
     }
 
 

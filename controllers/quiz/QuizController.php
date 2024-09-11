@@ -72,7 +72,7 @@ class QuizController
             $data['answer_3'] = trim(htmlspecialchars($_POST['answer_3']));
             $data['correct_answer'] = trim(htmlspecialchars($_POST['correct_answer']));
             $data['explanation'] = trim(htmlspecialchars($_POST['explanation'])) ? trim(htmlspecialchars($_POST['explanation'])) : '';
-tte($data);
+
             $quizModel = new QuizModel();
             $quizModel->updateQuiz($data);
         }
@@ -89,7 +89,26 @@ tte($data);
 
         header("Location: /quiz");
     }
+    public function search()
+    {
+        $inputData = json_decode(file_get_contents("php://input"), true);
+        $search = $inputData['question'];
+
+        $quizModel = new QuizModel();
+        $results = $quizModel->searchQuestions($search);
+
+        header("Content-Type:application/json");
+        echo json_encode($results);
+    }
+
 }
+
+
+
+
+
+
+
 
 
 
