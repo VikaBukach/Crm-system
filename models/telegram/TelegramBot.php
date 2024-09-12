@@ -119,7 +119,7 @@ class TelegramBot{
         return $response;
     }
 
-    //method for sending quiz message
+    //method for sending quiz message:
     public function sendTelegramQuizMessage($data, $headers = []){
         //  URL generation for a request to the Telegram API:
         $url = "https://api.telegram.org/bot{$this->botApiKey}/sendPoll";
@@ -129,7 +129,7 @@ class TelegramBot{
             'chat_id' => $data['chat_id'],
             'parse_mode' => 'HTML',
             'question' => $data['question'],
-            'options' => $data['options'],
+            'options' => json_encode($data['options']),
             'is_anonymous' => $data['is_anonymous'], // true & false
             'allows_multiple_answers' => $data['allows_multiple_answers'],
             'type' => 'quiz',
@@ -155,7 +155,7 @@ class TelegramBot{
            throw new \Exception('Error sending Telegram quiz message:' . $error);
        }
 
-        return json_decode($result,true);
+       return json_decode($result,true);
     }
 
 
