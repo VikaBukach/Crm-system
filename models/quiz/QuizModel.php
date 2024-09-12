@@ -161,6 +161,22 @@ class QuizModel
         }
     }
 
+    public function writeInTelegramQuizQuestions($id_question)
+    {
+        $query = "INSERT INTO telegram_quiz_questions (quiz_question_id) VALUES (?)";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$id_question]);
+
+            return true;
+        } catch (\PDOException $e) {
+            error_log('Error: ' . $e->getMessage());
+
+            return false;
+        }
+    }
+
 }
 
 
