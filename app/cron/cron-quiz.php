@@ -15,8 +15,8 @@ use models\quiz\QuizModel;
         // doing random selection of one question
     $quizModel = new QuizModel();
     $quiz = null;
-        // checking repeat question if it was for 180 days
-        $amountOfTime = date('Y-m-d H:i:s', strtotime('-180 days'));
+        // checking repeat question if it was for 10 days
+        $amountOfTime = date('Y-m-d H:i:s', strtotime('-10 days'));
 
         while(!$quiz) {
             $randomQuiz = $quizModel->getRandomQuiz(); //get question
