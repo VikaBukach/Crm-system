@@ -120,9 +120,9 @@ class TelegramBot{
     }
 
     //method for sending quiz message
-    public function sendTelegramQuizMessage($data){
+    public function sendTelegramQuizMessage($data, $headers = []){
         //  URL generation for a request to the Telegram API:
-        $url = "https://api.telegram.org/bot{$this->botApiKey}/sendMessage";
+        $url = "https://api.telegram.org/bot{$this->botApiKey}/sendPoll";
 
         //generation data for POST request:
         $postData = [
@@ -137,17 +137,25 @@ class TelegramBot{
             'explanation' => $data['explanation']
         ];
 
-        //session initialization with cURL:
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+        $curl = curl_init($url);
+        curl_setopt_array($curl,[
+            CURLOPT_POST => 1,
+            CURLOPT_HEADER => 0,
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => $url,
+            CURLOPT_POSTFIELDS =>json_encode($postData),
+            CURLOPT_HTTPHEADER => array_merge(["Content-Type: application/json"], $headers)
+        ]);
 
-        // execution cURL request:
-        $response = curl_exec($ch);
-        curl_close($ch);
+       $result = curl_exec($curl);
+       $error = curl_error($curl);
+       curl_close($curl);
 
-        // decode the string and send it return
-        return json_decode($response,true);
+       if ($result === false) {
+           throw new \Exception('Error sending Telegram quiz message:' . $error);
+       }
+
+        return json_decode($result,true);
     }
 
 
