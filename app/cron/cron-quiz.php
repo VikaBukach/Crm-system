@@ -14,11 +14,18 @@ use models\quiz\QuizModel;
     try{
         // doing random selection of one question
     $quizModel = new QuizModel();
-    $quiz = $quizModel->getRandomQuiz();
+    $quiz = null;
+        // checking repeat question if it was for 180 days
+        $amountOfTime = date('Y-m-d H:i:s', strtotime('-180 days'));
 
-    // checking repeat question if it was for 180 days
+        while(!$quiz) {
+            $randomQuiz = $quizModel->getRandomQuiz(); //get question
+            $count = $quizModel->checkTelegramQuizQuestion($randomQuiz['id'], $amountOfTime);
 
-
+            if($count == 0){
+                $quiz = $randomQuiz;
+            }
+        }
 
     $answers = [$quiz['answer_1'], $quiz['answer_2'], $quiz['answer_3']];
 

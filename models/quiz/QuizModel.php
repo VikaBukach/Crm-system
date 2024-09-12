@@ -177,6 +177,15 @@ class QuizModel
         }
     }
 
+    public function checkTelegramQuizQuestion($quizId, $amountOfTime){
+        $query = "SELECT COUNT(*) FROM telegram_quiz_questions WHERE quiz_question_id = :quiz_id AND created_at > :amountOfTime";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['quiz_id' => $quizId, 'amountOfTime' => $amountOfTime]);
+        $count = $stmt->fetchColumn();
+
+        return $count;
+    }
+
 }
 
 
