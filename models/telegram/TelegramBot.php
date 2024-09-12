@@ -129,7 +129,7 @@ class TelegramBot{
             'chat_id' => $data['chat_id'],
             'parse_mode' => 'HTML',
             'question' => $data['question'],
-            'options' => json_encode($data['options']),
+            'options' => $data['options'],
             'is_anonymous' => $data['is_anonymous'], // true & false
             'allows_multiple_answers' => $data['allows_multiple_answers'],
             'type' => 'quiz',
@@ -138,7 +138,7 @@ class TelegramBot{
         ];
 
         $curl = curl_init($url);
-        curl_setopt_array($curl,[
+        curl_setopt_array($curl, [
             CURLOPT_POST => 1,
             CURLOPT_HEADER => 0,
             CURLOPT_RETURNTRANSFER => 1,
