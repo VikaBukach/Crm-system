@@ -41,7 +41,7 @@ function is_active($path): string
 
             <ul class="nav nav-pills flex-column mb-auto">
 
-                <?php if($user_role == 5 || !ENABLE_PERMISSION_CHECK): ?>
+<!--                --><?php //if($user_role == 5 || !ENABLE_PERMISSION_CHECK): ?>
 
                 <li class="nav-item">
                     <a href="/" class="nav-link <?= is_active('/') ?>" aria-current="page">
@@ -68,7 +68,7 @@ function is_active($path): string
                     </a>
                 </li>
 
-                <?php endif ?>
+<!--                --><?php //endif ?>
                 <hr>
 
                 <h4>Quiz</h4>
