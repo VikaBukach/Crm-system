@@ -43,6 +43,8 @@ define('TELEGRAM_CHAT_ID', '-1002378283771');  // telegram ID chat for questions
 //https://api.telegram.org/bot{{TOKEN}}/getUpdates
 
 //SetUp info:
-//After installing the sistem for authorization Admin`s, use:
-//login: admin@gmail.com
-//password: 123
+/* After installing the system for authorization Admin`s, use:
+login: admin@gmail.com
+password: 123 */
+
+/*  NOW OPEN VISIBLE PERMISSION TO CHECK IN ALL CONTROLLERS AND HIDDEN CHECK ON ROLE!!!!  OPENING!!--><?php //if($user_role == 5 || !ENABLE_PERMISSION_CHECK): ?> */
