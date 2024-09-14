@@ -25,7 +25,7 @@ class UsersController
 
     public function index()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $userModel = new User();
         $users = $userModel->readAll();
@@ -67,7 +67,7 @@ class UsersController
     }
 
     public function edit($params){
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $userModel = new User();
         $user = $userModel->read($params['id']);
@@ -80,7 +80,7 @@ class UsersController
 
     public function update($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $userModel = new User();
         $userModel->update($params['id'], $_POST);
@@ -99,7 +99,7 @@ class UsersController
 
     public function delete($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $userModel = new User();
         $userModel->delete($params['id']);

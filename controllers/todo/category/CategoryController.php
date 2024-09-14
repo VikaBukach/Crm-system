@@ -16,7 +16,7 @@ class CategoryController
     }
     public function index()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $todoCategoryModel = new CategoryModel();
         $categories = $todoCategoryModel->getAllCategories();
@@ -26,14 +26,14 @@ class CategoryController
 
     public function create()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         include 'app/views/todo/category/create.php';
     }
 
     public function store()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         if (isset($_POST['title']) && isset($_POST['description'])) {
             $title = trim(htmlspecialchars($_POST['title']));
@@ -54,7 +54,7 @@ class CategoryController
 
     public function edit($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $todoCategoryModel = new CategoryModel();
         $category = $todoCategoryModel->getCategoryById($params['id']);
@@ -77,7 +77,7 @@ class CategoryController
 
     public function update($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         if (isset($params['id']) && isset($_POST['title']) && isset($_POST['description'])) {
             $id = trim($params['id']);
@@ -99,7 +99,7 @@ class CategoryController
 
     public function delete($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $todoCategoryModel = new CategoryModel();
         $todoCategoryModel->deleteCategory($params['id']);

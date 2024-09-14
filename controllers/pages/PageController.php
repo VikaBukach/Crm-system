@@ -36,7 +36,7 @@ class PageController
 
     public function store()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         if (isset($_POST['title']) && isset($_POST['slug']) && isset($_POST['roles'])) {
             $title = trim(htmlspecialchars($_POST['title']));

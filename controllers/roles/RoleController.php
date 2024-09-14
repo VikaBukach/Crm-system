@@ -14,7 +14,7 @@ class RoleController
     }
     public function index()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
@@ -24,14 +24,14 @@ class RoleController
 
     public function create()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         include 'app/views/roles/create.php';
     }
 
     public function store()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         if (isset($_POST['role_name']) && isset($_POST['role_description'])) {
             $role_name = trim(htmlspecialchars($_POST['role_name']));
@@ -51,7 +51,7 @@ class RoleController
 
     public function edit($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $roleModel = new Role();
         $role = $roleModel->getRoleById($params['id']);
@@ -66,7 +66,7 @@ class RoleController
 
     public function update($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         if (isset($params['id']) && isset($_POST['role_name']) && isset($_POST['role_description'])) {
             $id = trim($params['id']);
@@ -87,7 +87,7 @@ class RoleController
 
     public function delete($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $roleModel = new Role();
         $roleModel->deleteRole($params['id']);

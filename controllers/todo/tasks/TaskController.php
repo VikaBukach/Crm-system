@@ -18,7 +18,7 @@ class TaskController
     }
     public function index()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
         $taskModel = new TaskModel();
@@ -36,7 +36,7 @@ class TaskController
     }
     public function completed()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
         $taskModel = new TaskModel();
@@ -55,7 +55,7 @@ class TaskController
 
     public function expired()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
         $taskModel = new TaskModel();
@@ -73,7 +73,7 @@ class TaskController
 
     public function create()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $todoCategoryModel = new CategoryModel();
         $categories = $todoCategoryModel->getAllCategoriesWithUsability();
@@ -83,7 +83,7 @@ class TaskController
 
     public function store()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         if (isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])) {
             $data['title'] = trim(htmlspecialchars($_POST['title']));
@@ -104,7 +104,7 @@ class TaskController
 
     public function edit($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
         $taskModel = new TaskModel();
         $task = $taskModel->getTaskById($params['id']);
 
@@ -131,7 +131,7 @@ class TaskController
 
     public function update()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         if (isset($_POST['id']) && isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])) {
             $data['id'] = trim($_POST['id']);
@@ -219,7 +219,7 @@ class TaskController
 
 public function tasksByTag($params)
 {
-    $this->check->requirePermission();
+//    $this->check->requirePermission();
 
     $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
@@ -242,7 +242,7 @@ public function tasksByTag($params)
 }
     public function updateStatus($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $datetime = null;
         $status = trim(htmlspecialchars($_POST['status']));
@@ -260,7 +260,7 @@ public function tasksByTag($params)
     }
     public function task($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $task_id = isset($params['id']) ? intval($params['id']) : 0;
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
