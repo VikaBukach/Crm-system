@@ -57,7 +57,7 @@
 * Completed tasks appear in the Completed section, and overdue tasks appear in the Expired section, but they remain editable.
 
 * In the account menu of a registered user (where the email is displayed), go to the profile to link the CRM system with the Telegram bot.
-*
+
 * Follow the instructions to integrate the bot for task reminders and communication with users. Task completion reminders are sent via cron.
 
 ****! For demonstration purposes, almost all accesses are open to all users. The intended design of the CRM system is that only the super admin will have full access to all pages, including their creation, editing, and deletion.
