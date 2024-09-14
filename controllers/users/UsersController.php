@@ -35,7 +35,7 @@ class UsersController
 
     public function create()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         include 'app/views/users/create.php';
     }

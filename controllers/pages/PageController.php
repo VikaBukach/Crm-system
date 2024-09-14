@@ -16,7 +16,7 @@ class PageController
 
     public function index()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $pageModel = new PageModel();
         $pages = $pageModel->getAllPages();

@@ -209,7 +209,7 @@ class TaskController
 
     public function delete($params)
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         $todoCategoryModel = new CategoryModel();
         $todoCategoryModel->deleteCategory($params['id']);
