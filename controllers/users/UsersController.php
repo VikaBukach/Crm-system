@@ -42,7 +42,7 @@ class UsersController
 
     public function store()
     {
-        $this->check->requirePermission();
+//        $this->check->requirePermission();
 
         if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
             $password = trim($_POST['password']);

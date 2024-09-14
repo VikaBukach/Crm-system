@@ -84,6 +84,12 @@ function is_active($path): string
                         Quiz create
                     </a>
                 </li>
+                <li>
+                    <a href="/shortlink/create" class="nav-link text-white <?= is_active('/shortlink/create') ?>">
+                        <svg class="bi me-2" width="16" height="16"><use xlink:href="/shortlink/create"></use></svg>
+                        Shortlink create
+                    </a>
+                </li>
 
                 <hr>
                 <h4>To do list</h4>

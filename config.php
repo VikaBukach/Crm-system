@@ -41,3 +41,8 @@ define('TELEGRAM_CHAT_ID', '-1002378283771');  // telegram ID chat for questions
 //link that know how is it ID group tg:
 // 1- create bot, 2 add it in group, 3 - do this bot as admin, 4 - write text in group, 5 - see ID of group through link
 //https://api.telegram.org/bot{{TOKEN}}/getUpdates
+
+//SetUp info:
+//After installing the sistem for authorization Admin`s, use:
+//login: admin@gmail.com
+//password: 123
