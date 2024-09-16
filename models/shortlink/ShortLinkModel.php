@@ -21,6 +21,7 @@ class ShortLinkModel
     {
         $queryShortLinks = "CREATE TABLE IF NOT EXISTS short_links (
              id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+             title_link TEXT NOT NULL,
              original_url TEXT NOT NULL,
              short_url TEXT NOT NULL,
              created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -57,12 +58,12 @@ class ShortLinkModel
             return false;
         }
     }
-    public function createLink($original_url, $shortCode){
-        $query = "INSERT INTO short_links (original_url, short_url) VALUES (?, ?)";
+    public function createLink($title_link, $original_url, $shortCode){
+        $query = "INSERT INTO short_links (title_link, original_url, short_url) VALUES (?, ?, ?)";
 
         try{
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$original_url, $shortCode]);
+            $stmt->execute([$title_link, $original_url, $shortCode]);
             return $this->db->lastInsertId();
         }catch(\PDOException $e){
             return false;

@@ -7,9 +7,13 @@ ob_start();
 <h1 class="mb-4">Create shortlink</h1>
 <form method="POST" action="/shortlink/store">
     <div class="mb-3">
+        <label for="title_link" class="form-label">Title Link</label>
+        <input type="text" class="form-control" id="title_link" name="title_link" required>
+        <input type="hidden" name="user_id" value="<?=$userId;?>">
+    </div>
+    <div class="mb-3">
         <label for="original_url" class="form-label">Original URL</label>
         <input type="url" class="form-control" id="original_url" name="original_url" required>
-        <input type="hidden" name="user_id" value="<?=$userId ?>;">
         <div class="form-text">
             <ul>
                 <li>The field must contain at least 10 characters.</li>

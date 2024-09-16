@@ -28,9 +28,10 @@ class ShortLinkController {
 
     public function store(){
         //this->check->requirePermission();
-        if(isset($_POST['original_url']) && isset($_POST['user_id'])){
+        if(isset($_POST['original_url']) && isset($_POST['user_id']) && isset($_POST['title_link'])){
             $original_url = trim(htmlspecialchars($_POST['original_url']));
             $user_id = (int) $_POST['user_id'];
+            $title_link = $_POST['title_link'];
 
             if(!filter_var($original_url, FILTER_VALIDATE_URL)){
                 echo "Invalid URL!";
@@ -74,10 +75,10 @@ class ShortLinkController {
                 }
             }
 
-            $shortUrlId = $this->ShortLinkModel->createLink($_POST['original_url'], $shortCode);
+            $shortUrlId = $this->ShortLinkModel->createLink($title_link, $_POST['original_url'], $shortCode);
             $this->ShortLinkModel->createUserLink($user_id, $shortUrlId);
         }
-        header("location: /shortlink/create");
+        header("location: /shortlink");
     }
 
 
