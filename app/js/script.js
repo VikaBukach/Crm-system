@@ -61,11 +61,3 @@ function sortTasksByPriority(priority) {
         tasksAccordion.appendChild(task);
     });
 }
-
-
-
-
-
-
-
-
