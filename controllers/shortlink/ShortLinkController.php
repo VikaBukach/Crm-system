@@ -68,7 +68,6 @@ class ShortLinkController {
                 $shortCode = $_POST['short_code'];
             }
 
-
             while($this->ShortLinkModel->isShortUrlExists($shortCode)) {
                 $shortCode = '';
                 while (strlen($shortCode) < 6) {
@@ -91,6 +90,19 @@ class ShortLinkController {
         header("location: /shortlink");
     }
 
+    public function redirect(){
+        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+
+        $domain = $_SERVER['HTTP_HOST'];
+        $uri = $_SERVER['REQUEST_URI'];
+        $url = $protocol . "://" . $domain . $uri;
+
+        $code = basename(parse_url($url, PHP_URL_PATH));
+
+        $originalURL = $this->ShortLinkModel->getOriginalLinkByShortCode($code);
+        header("location: $originalURL");
+
+    }
 
 
 }

@@ -25,6 +25,7 @@ class Router{
         '/^\/todo\/tasks\/task(\/(?P<id>\d+))?$/' => ['controller' => 'todo\tasks\\TaskController', 'action'=> 'task'],
         '/^\/quiz(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'quiz\\QuizController'],
         '/^\/shortlink(\/(?P<action>[a-zA-Z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'shortlink\\ShortLinkController'],
+        '/^\/([a-zA-Z0-9-]{6,10})$/' => ['controller' => 'shortlink\\ShortLinkController', 'action' => 'redirect'],
 
     ];
 

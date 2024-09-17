@@ -99,8 +99,20 @@ class ShortLinkModel
         } catch (\PDOException $e) {
             echo "Error: " . $e->getMessage();
             return [];
+        }
+    }
+    public function getOriginalLinkByShortCode($code){
+        $query = "SELECT original_url FROM short_links WHERE short_url = ? LIMIT 1";
 
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$code]);
+            $row = $stmt->fetch();
+            return $row ? $row['original_url'] : null;
 
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
         }
     }
 
