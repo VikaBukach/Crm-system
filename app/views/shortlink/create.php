@@ -5,6 +5,7 @@ ob_start();
 
 ?>
 <h1 class="mb-4">Create shortlink</h1>
+
 <form method="POST" action="/shortlink/store">
     <div class="mb-3">
         <label for="title_link" class="form-label">Title Link</label>

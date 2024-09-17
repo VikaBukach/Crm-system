@@ -10,6 +10,7 @@ class ShortLinkController {
     private $ShortLinkModel;
     private $check;
     private $userId;
+    private $domain;
 
     public function __construct(){
         $this->ShortLinkModel = new ShortLinkModel();
@@ -17,6 +18,16 @@ class ShortLinkController {
         $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
         $this->check = new Check($userRole);
         $this->userId = $userId;
+        $this->domain = $_SERVER['SERVER_NAME'];
+    }
+
+    public function index(){
+        // $this->check->requirePermission();
+
+       $short_links = $this->ShortLinkModel->getAllShortLinksByIdUser($this->userId);
+       $domain = $this->domain;
+
+        include 'app/views/shortlink/index.php';
     }
 
     public function create(){
@@ -25,6 +36,7 @@ class ShortLinkController {
 
         include 'app/views/shortlink/create.php';
     }
+
 
     public function store(){
         //this->check->requirePermission();
@@ -55,8 +67,6 @@ class ShortLinkController {
             }else{
                 $shortCode = $_POST['short_code'];
             }
-
-
 
 
             while($this->ShortLinkModel->isShortUrlExists($shortCode)) {

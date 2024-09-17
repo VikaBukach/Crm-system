@@ -83,4 +83,25 @@ class ShortLinkModel
         }
     }
 
+    public function getAllShortLinksByIdUser($userId)
+    {
+        $query = "SELECT short_links.*
+                  FROM short_links
+                  JOIN user_links ON short_links.id = user_links.link_id
+                  WHERE user_links.user_id = ?;";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$userId]);
+            $short_links = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $short_links ? $short_links : $short_links = [];
+
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
+
+
+        }
+    }
+
 }
