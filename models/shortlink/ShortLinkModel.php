@@ -116,4 +116,87 @@ class ShortLinkModel
         }
     }
 
+    public function deleteShortLink($link_id, $user_id){
+
+        try {
+            //check link_id=user_id
+            $checkUserQuery = "SELECT * FROM user_links WHERE link_id = ? AND user_id = ?";
+            $stmtCheck = $this->db->prepare($checkUserQuery);
+            $stmtCheck->execute([$link_id, $user_id]);
+
+            if ($stmtCheck->rowCount() > 0) {
+                // delete from user_links tab
+                $deleteUserLinksQuery = "DELETE FROM user_links WHERE link_id = ?";
+                $stmt = $this->db->prepare($deleteUserLinksQuery);
+                $stmt->execute([$link_id]);
+
+                // delete from short_links tab
+                $deleteShortLinkQuery = "DELETE FROM short_links WHERE id = ?";
+                $stmt = $this->db->prepare($deleteShortLinkQuery);
+                $stmt->execute([$link_id]);
+
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function getShortLinkById($link_id, $user_id){
+        try {
+            //check link_id=user_id
+            $checkUserQuery = "SELECT * FROM user_links WHERE link_id = ? AND user_id = ?";
+            $stmtCheck = $this->db->prepare($checkUserQuery);
+            $stmtCheck->execute([$link_id, $user_id]);
+
+            if ($stmtCheck->rowCount() > 0) {
+                // get records from user_links tab
+                $query = "SELECT short_links.*, user_links.user_id
+                FROM short_links
+                JOIN user_links ON short_links.id = user_links.link_id
+                WHERE short_links.id = ?";
+
+                $stmt = $this->db->prepare($query);
+                $stmt->execute([$link_id]);
+                $shortLink = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+                return $shortLink ? $shortLink : null;
+            } else {
+                return null;
+            }
+        } catch (\PDOException $e) {
+            return null;
+        }
+    }
+
+    public function isShortUrlExistsWithIdAndCode($short_link_id, $shortCode){
+        $query = "SELECT COUNT(*) FROM short_links WHERE id != ? AND short_url = ?";
+
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$short_link_id, $shortCode]);
+            $count =$stmt->fetchColumn();
+            return $count > 0;
+        }catch(\PDOException $e){
+            return false;
+        }
+    }
+
+    public function updateLink($short_link_id, $title_link, $original_url, $shortCode) {
+        $query = "UPDATE short_links SET title_link = ?, original_url = ?, short_url = ? WHERE id = ?";
+
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$title_link, $original_url, $shortCode, $short_link_id]);
+            return true;
+        }catch(\PDOException $e){
+            return false;
+        }
+
+    }
+
+
+
 }

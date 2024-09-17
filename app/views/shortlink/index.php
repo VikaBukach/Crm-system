@@ -31,6 +31,10 @@ ob_start();
                     <p><strong>Original URL:</strong> <a target="_blank" href="<?php echo $short_link['original_url']; ?>"><?php echo $short_link['original_url']; ?></a></p>
                     <p><strong>Created at:</strong> <?php echo $short_link['created_at']; ?></p>
                 </div>
+                <div class="d-flex justify-content-start action-quiz m-2">
+                    <a href="/shortlink/edit/<?php echo $short_link['id']; ?>" class="btn btn-primary me-2">Edit</a>
+                    <a href="/shortlink/delete/<?php echo $short_link['id']; ?>" class="btn btn-danger me-2">Delete</a>
+                </div>
             </div>
         </div>
     <?php endforeach; ?>

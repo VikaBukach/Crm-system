@@ -15,9 +15,8 @@ class ShortLinkController {
     public function __construct(){
         $this->ShortLinkModel = new ShortLinkModel();
         $userRole = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : null;
-        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+        $this->userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
         $this->check = new Check($userRole);
-        $this->userId = $userId;
         $this->domain = $_SERVER['SERVER_NAME'];
     }
 
@@ -101,7 +100,80 @@ class ShortLinkController {
 
         $originalURL = $this->ShortLinkModel->getOriginalLinkByShortCode($code);
         header("location: $originalURL");
+    }
 
+    public function delete($params){
+        //this->check->requirePermission();
+        $user_id = $this->userId;
+
+        if ($this->ShortLinkModel->deleteShortLink($params['id'], $user_id)) {
+            header("Location: /shortlink");
+            exit();
+        } else {
+            echo "Error that delete the short link!";
+        }
+    }
+
+    public function edit($params){
+        //this->check->requirePermission();
+        $user_id = $this->userId;
+        $short_link = $this->ShortLinkModel->getShortLinkById($params['id'], $user_id);
+        if (!$short_link) {
+            echo "Error: Short link don't found!";
+            return;
+        }
+        include 'app/views/shortlink/edit.php';
+    }
+    public function update(){
+        //this->check->requirePermission();
+
+        if(isset($_POST['original_url']) && isset($_POST['short_link_id']) && isset($_POST['title_link'])){
+            $original_url = trim(htmlspecialchars($_POST['original_url']));
+            $short_link_id = $_POST['short_link_id'];
+            $title_link = $_POST['title_link'];
+
+            if(!filter_var($original_url, FILTER_VALIDATE_URL)){
+                echo "Invalid URL!";
+                return;
+            }
+
+            if(!$_POST['short_code']){
+                $shortCode = '';
+                while(strlen($shortCode) < 6){
+                    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                    $randomString = '';
+                    for($i = 0; $i < rand(6,10); $i++){
+                        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+                    }
+                    $shortCode = substr(preg_replace('/[^a-zA-Z\d]/', '', $randomString), 0, rand(6,10));
+
+                    if(!preg_match('/^[a-zA-Z][a-zA-Z\d-]{5,9}$/', $shortCode)){
+                        $shortCode = '';
+                    }
+                }
+            }else{
+                $shortCode = $_POST['short_code'];
+            }
+
+            while($this->ShortLinkModel->isShortUrlExistsWithIdAndCode($short_link_id, $shortCode)) {
+                $shortCode = '';
+                while (strlen($shortCode) < 6) {
+                    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                    $randomString = '';
+                    for ($i = 0; $i < rand(6, 10); $i++) {
+                        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+                    }
+                    $shortCode = substr(preg_replace('/[^a-zA-Z\d]/', '', $randomString), 0, rand(6, 10));
+
+                    if (!preg_match('/^[a-zA-Z][a-zA-Z\d-]{5,9}$/', $shortCode)) {
+                        $shortCode = '';
+                    }
+                }
+            }
+
+            $this->ShortLinkModel->updateLink($short_link_id, $title_link, $original_url, $shortCode);
+        }
+        header("location: /shortlink");
     }
 
 
