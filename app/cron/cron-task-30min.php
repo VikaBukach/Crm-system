@@ -1,7 +1,7 @@
 <?php
 
 //this file will be pulled from the task database every 30 minutes and sent to Telegram as a deadline reminder
-require_once '../../config.php';
+require_once '../../local-config.php';
 require_once '../../autoload.php';
 require_once '../../models/telegram/TelegramBot.php';
 
