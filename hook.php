@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once 'config.php';
+require_once 'local-config.php';
 require_once 'autoload.php';
 require_once 'models/telegram/TelegramBot.php';
 

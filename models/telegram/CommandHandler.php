@@ -2,9 +2,8 @@
 
 namespace models\telegram;
 
- use models\users\User;
+use models\users\User;
 use models\todo\tasks\TaskModel;
- use function Symfony\Component\String\b;
 
  class CommandHandler
 {
@@ -52,6 +51,6 @@ use models\todo\tasks\TaskModel;
 👎Expired:  <b>$expired</b>
         ";
 
-            return $text;
+        return $text;
     }
 }
