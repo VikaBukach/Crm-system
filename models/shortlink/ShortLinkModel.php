@@ -104,9 +104,10 @@ class ShortLinkModel
 
     public function getAllShortLinksByIdUser($userId)
     {
-        $query = "SELECT short_links.*
+        $query = "SELECT short_links.*, number_of_clicks.amount AS clicks
                   FROM short_links
                   JOIN user_links ON short_links.id = user_links.link_id
+                  LEFT JOIN number_of_clicks ON short_links.id = number_of_clicks.id_short_links
                   WHERE user_links.user_id = ?;";
 
         try {
@@ -274,24 +275,18 @@ class ShortLinkModel
         }catch(\PDOException $e){
             return false;
         }
-
     }
+    public function getInformationAboutEveryClick($shortLinkId){
+        $query = "SELECT * FROM user_info WHERE id_short_links = ?";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$shortLinkId]);
+            $short_links_info =$stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $short_links_info ? $short_links_info : $short_links_info = [];
+        }catch(\PDOException $e){
+            return [];
+        }
+    }
 
 }

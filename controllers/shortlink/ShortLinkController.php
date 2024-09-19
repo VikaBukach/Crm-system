@@ -36,7 +36,6 @@ class ShortLinkController {
         include 'app/views/shortlink/create.php';
     }
 
-
     public function store(){
         //this->check->requirePermission();
         if(isset($_POST['original_url']) && isset($_POST['user_id']) && isset($_POST['title_link'])){
@@ -198,5 +197,11 @@ class ShortLinkController {
             $this->ShortLinkModel->updateLink($short_link_id, $title_link, $original_url, $shortCode);
         }
         header("location: /shortlink");
+    }
+
+    public function information($params){
+        $informations = $this->ShortLinkModel->getInformationAboutEveryClick($params['id']);
+
+        include 'app/views/shortlink/information.php';
     }
 }

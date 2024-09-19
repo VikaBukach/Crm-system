@@ -2,6 +2,7 @@
 
 $title = 'Short links';
 ob_start();
+//tt($short_links);
 ?>
 
 <h1 class="mb-4">Short links</h1>
@@ -26,6 +27,7 @@ ob_start();
                  aria-labelledby="heading-<?php echo $short_link['id']; ?>"
                  data-bs-parent="#short_links-accordion">
                 <div class="accordion-body">
+                    <p><strong>Amount click:</strong> <?php echo $short_link['clicks'] ? $short_link['clicks'] : 0; ?></p>
                     <p><strong>Short Code:</strong> <?php echo $short_link['short_url']; ?></p>
                     <p><strong>Short URL:</strong> <a target="_blank" href="<?php echo "/". $short_link['short_url']; ?>"><?php echo $domain . $short_link['short_url']; ?></a></p>
                     <p><strong>Original URL:</strong> <a target="_blank" href="<?php echo $short_link['original_url']; ?>"><?php echo $short_link['original_url']; ?></a></p>
