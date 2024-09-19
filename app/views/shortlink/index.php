@@ -34,6 +34,7 @@ ob_start();
                 <div class="d-flex justify-content-start action-quiz m-2">
                     <a href="/shortlink/edit/<?php echo $short_link['id']; ?>" class="btn btn-primary me-2">Edit</a>
                     <a href="/shortlink/delete/<?php echo $short_link['id']; ?>" class="btn btn-danger me-2">Delete</a>
+                    <a href="/shortlink/information/<?php echo $short_link['id']; ?>" class="btn btn-info me-2">Information about clicks</a>
                 </div>
             </div>
         </div>

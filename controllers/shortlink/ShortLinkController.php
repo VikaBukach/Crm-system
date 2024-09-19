@@ -99,6 +99,30 @@ class ShortLinkController {
         $code = basename(parse_url($url, PHP_URL_PATH));
 
         $originalURL = $this->ShortLinkModel->getOriginalLinkByShortCode($code);
+
+        //Save statistics and data:
+
+        $data['ip_user'] = $_SERVER['REMOTE_ADDR'] ? $_SERVER['REMOTE_ADDR'] : null;
+        $data['user_agent'] = $_SERVER['HTTP_USER_AGENT'] ? $_SERVER['HTTP_USER_AGENT'] : null;
+        $data['user_referer'] = $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : null;
+
+        $shortCode = $_SERVER['REQUEST_URI'];
+        $shortCode = trim($shortCode, '/');
+
+        if($shortCode){
+            $shortLinkId = $this->ShortLinkModel->getIdlLinkByShortCode($shortCode);
+            $data['short_link_id'] = $shortLinkId;
+
+            //recording data about user in other table:
+            $this->ShortLinkModel->createUserInfoByRedirectAction($data);
+            //count the number of transitions:
+            $existingRow = $this->ShortLinkModel->getByShortLinksId($shortLinkId);
+            if($existingRow){
+               $this->ShortLinkModel->updateAmount($existingRow['id'], $existingRow['amount'] + 1);
+            } else {
+                $this->ShortLinkModel->createNewRow($shortLinkId, 1);
+            }
+        }
         header("location: $originalURL");
     }
 
@@ -175,6 +199,4 @@ class ShortLinkController {
         }
         header("location: /shortlink");
     }
-
-
 }

@@ -37,9 +37,28 @@ class ShortLinkModel
              FOREIGN KEY (link_id) REFERENCES short_links(id)
         );";
 
+        $queryUserInfo = "CREATE TABLE IF NOT EXISTS user_info (
+             id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+             id_short_links INT(11) NOT NULL,
+             ip_user VARCHAR(255),
+             user_agent TEXT,
+             user_referer TEXT,
+             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+             FOREIGN KEY (id_short_links) REFERENCES short_links(id)
+        );";
+
+        $queryAmountClicks = "CREATE TABLE IF NOT EXISTS number_of_clicks (
+             id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+             id_short_links INT(11) NOT NULL,
+             amount INT NOT NULL DEFAULT 0,
+             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        );";
+
     try{
         $this->db->exec($queryShortLinks);
         $this->db->exec($queryUserLinks);
+        $this->db->exec($queryUserInfo);
+        $this->db->exec($queryAmountClicks);
         return true;
     } catch(\PDOException $e){
         return false;
@@ -194,8 +213,84 @@ class ShortLinkModel
         }catch(\PDOException $e){
             return false;
         }
+    }
+
+    public function getIdlLinkByShortCode($shortCode){
+        $query = "SELECT id FROM short_links WHERE short_url = ?";
+
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$shortCode]);
+            $row =$stmt->fetch();
+            return $row ? $row['id'] : null;
+        }catch(\PDOException $e){
+            return null;
+        }
+    }
+
+    public function createUserInfoByRedirectAction($data){
+        $query = "INSERT INTO user_info (id_short_links, ip_user, user_agent, user_referer) VALUES (?, ?, ?, ?)";
+
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$data['short_link_id'], $data['ip_user'], $data['user_agent'], $data['user_referer']]);
+            return $this->db->lastInsertId();
+        }catch(\PDOException $e){
+            return false;
+        }
+    }
+
+    public function getByShortLinksId($shortLinkId){
+        $query = "SELECT * FROM number_of_clicks WHERE id_short_links = ?";
+
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$shortLinkId]);
+            $row =$stmt->fetch();
+            return $row ? $row : null;
+        }catch(\PDOException $e){
+            return null;
+        }
+    }
+    public function updateAmount($rowId, $newAmount)
+    {
+        $query = "UPDATE number_of_clicks SET amount = ? WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$rowId, $newAmount]);
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function createNewRow($shortLinkId, $amount){
+        $query = "INSERT INTO number_of_clicks (id_short_links, amount) VALUES (?, ?)";
+
+        try{
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([$shortLinkId, $amount]);
+            return $this->db->lastInsertId();
+        }catch(\PDOException $e){
+            return false;
+        }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

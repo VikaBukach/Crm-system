@@ -48,8 +48,3 @@ ob_start();
 
 include 'app/views/layout.php';
 ?>
-
-
-
-
-
