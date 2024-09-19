@@ -130,14 +130,15 @@ class TaskModel
 
         $query = "INSERT INTO todo_list (user_id, title, category_id, status, priority, finish_date, reminder_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        $date = new DateTime($data['reminder_at'], new DateTimeZone('+3'));
-        $date->setTimezone(new DateTimeZone('UTC'));
-        $reminder_at = $date->format('Y-m-d H:i:s');
+        //Change time UTC:
 
+//        $date = new DateTime($data['reminder_at'], new DateTimeZone('+3'));
+//        $date->setTimezone(new DateTimeZone('UTC'));
+//        $reminder_at = $date->format('Y-m-d H:i:s');
 
         try {
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$data['user_id'], $data['title'], $data['category_id'], $data['status'], $data['priority'], $data['finish_date'],$reminder_at]);
+            $stmt->execute([$data['user_id'], $data['title'], $data['category_id'], $data['status'], $data['priority'], $data['finish_date'],$data['reminder_at']]);
             return true;
         } catch (\PDOException $e) {
             return false;
