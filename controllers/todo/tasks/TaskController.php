@@ -6,6 +6,8 @@ use models\todo\tasks\TaskModel;
 use models\todo\tasks\TagsModel;
 use models\todo\category\CategoryModel;
 use models\Check;
+use DateTime;
+use DateTimeZone;
 
 class TaskController
 {
@@ -86,9 +88,15 @@ class TaskController
 //        $this->check->requirePermission();
 
         if (isset($_POST['title']) && isset($_POST['category_id']) && isset($_POST['finish_date'])) {
+
             $data['title'] = trim(htmlspecialchars($_POST['title']));
             $data['category_id'] = trim(htmlspecialchars($_POST['category_id']));
+
             $data['finish_date'] = trim(htmlspecialchars($_POST['finish_date']));
+            $date = new DateTime($data['finish_date'], new DateTimeZone('+3'));//Change time UTC:
+            $date->setTimezone(new DateTimeZone('UTC'));
+            $data['finish_date'] = $date->format('Y-m-d H:i:s');
+
             $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
             $data['status'] = 'new';
             $data['priority'] = 'low';
