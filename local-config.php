@@ -33,9 +33,6 @@ define('ENABLE_PERMISSION_CHECK', true); //setting the value to FALSE will disab
 
 define('TELEGRAM_BOT_API_KEY', '7280417731:AAH81m6gu8BVol32murTcOG-tUttCQ6xGQw');
 
-
-define('REMINDER_DATA', '-1 day'); //in how many days there will be a reminder about the tasks
-
 define('TELEGRAM_CHAT_ID', '-1002378283771');  // telegram ID chat for questions
 
 //link that know how is it ID group tg:

@@ -100,7 +100,7 @@ class TaskController
             $data['user_id'] = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
             $data['status'] = 'new';
             $data['priority'] = 'low';
-            $data['reminder_at'] = date('Y-m-d H:i:s', strtotime($data['finish_date'] . REMINDER_DATA));
+            $data['reminder_at'] = date('Y-m-d H:i:s', strtotime($data['finish_date']));
 
             $taskModel = new TaskModel();
             $taskModel->createTask($data);

@@ -11,14 +11,13 @@ use models\telegram\TelegramBot;
 $db = Database::getInstance()->getConnection();
 
 try{
-    //the field `created_at` not later than 7 days, <= 7 days
-    //the field `reminder_at` corresponds to current date and time, with + 15 minutes
+
     $query = "SELECT tr.*, tl.title, tl.finish_date, ut.telegram_chat_id, ut.telegram_username
-    FROM todo_reminders AS tr
-    INNER JOIN todo_list AS tl ON tr.task_id = tl.id
-    INNER JOIN user_telegrams AS ut ON tr.user_id = ut.user_id
-    WHERE tr.created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
-    AND tr.reminder_at BETWEEN DATE_SUB(NOW(), INTERVAL 15 MINUTE) AND DATE_ADD(NOW(), INTERVAL 15 MINUTE)
+FROM todo_reminders AS tr
+         INNER JOIN todo_list AS tl ON tr.task_id = tl.id
+         INNER JOIN user_telegrams AS ut ON tr.user_id = ut.user_id
+WHERE tr.created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+  AND tr.reminder_at BETWEEN DATE_SUB(tl.reminder_at, INTERVAL 24 HOUR) AND DATE_ADD(tl.reminder_at, INTERVAL 1 HOUR);
     ";
     $stmt = $db->query($query);
     $tasks = $stmt->fetchAll(\PDO::FETCH_ASSOC);
