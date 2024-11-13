@@ -1,6 +1,6 @@
 ******     Початок роботи з CRM системою:    ******
 
-https://crm-telegram.it-vimax.info/
+https://crm-telegram.viko.it-vimax.com.ua/
 
 * Зліва внизу відкрийте меню акаунта, оберіть SIGN IN та пройдіть реєстрацію у формі Register here.
   
