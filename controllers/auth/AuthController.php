@@ -7,7 +7,7 @@ class AuthController
 {
     public function register()
     {
-        include 'app/views/auth/register.php';
+        include 'app1/views/auth/register.php';
     }
 
     public function store()
@@ -38,7 +38,7 @@ class AuthController
 
     public function login()
     {
-        include 'app/views/auth/login.php';
+        include 'app1/views/auth/login.php';
     }
 
     public function authentication()

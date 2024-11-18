@@ -21,14 +21,14 @@ class QuizController
         $quizModel = new QuizModel();
         $quizes = $quizModel->readAll();
 
-        include 'app/views/quiz/index.php';
+        include 'app1/views/quiz/index.php';
     }
 
     public function create()
     {
 //        $this->check->requirePermission();
 
-        include 'app/views/quiz/create.php';
+        include 'app1/views/quiz/create.php';
     }
 
     public function store()
@@ -57,7 +57,7 @@ class QuizController
         $quizModel = new QuizModel();
         $quiz = $quizModel->getQuizById($params['id']);
 
-        include 'app/views/quiz/edit.php';
+        include 'app1/views/quiz/edit.blade.php';
     }
 
     public function update($params)

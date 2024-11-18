@@ -30,14 +30,14 @@ class UsersController
         $userModel = new User();
         $users = $userModel->readAll();
 
-        include 'app/views/users/index.php';
+        include 'app1/views/users/index.php';
     }
 
     public function create()
     {
 //        $this->check->requirePermission();
 
-        include 'app/views/users/create.php';
+        include 'app1/views/users/create.php';
     }
 
     public function store()
@@ -75,7 +75,7 @@ class UsersController
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
 
-        include 'app/views/users/edit.php';
+        include 'app1/views/users/edit.blade.php';
     }
 
     public function update($params)
@@ -143,7 +143,7 @@ class UsersController
             $otp = generateOTP();
             $visible = true;
         }
-        include 'app/views/users/profile.php';
+        include 'app1/views/users/profile.php';
     }
 
 

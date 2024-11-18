@@ -7,7 +7,7 @@ spl_autoload_register(function ($class) {
     if(file_exists($classPath)) {
         require_once  $classPath;
     }else{
-        $class = str_replace('controllers', 'app/controllers', $class);
+        $class = str_replace('controllers', 'app1/controllers', $class);
         $classPath = __DIR__ . DIRECTORY_SEPARATOR . $class . '.php';
 
         if(file_exists($classPath)) {

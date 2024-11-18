@@ -21,14 +21,14 @@ class CategoryController
         $todoCategoryModel = new CategoryModel();
         $categories = $todoCategoryModel->getAllCategories();
 
-        include 'app/views/todo/category/index.php';
+        include 'app1/views/todo/category/index.php';
     }
 
     public function create()
     {
 //        $this->check->requirePermission();
 
-        include 'app/views/todo/category/create.php';
+        include 'app1/views/todo/category/create.php';
     }
 
     public function store()
@@ -63,7 +63,7 @@ class CategoryController
 
         if(!$category || $category['user'] != $user_id) {
             http_response_code(404);
-            include 'app/views/errors/404.php';
+            include 'app1/views/errors/404.php';
             return;
         }
 
@@ -72,7 +72,7 @@ class CategoryController
             return;
         }
 
-        include 'app/views/todo/category/edit.php';
+        include 'app1/views/todo/category/edit.blade.php';
     }
 
     public function update($params)

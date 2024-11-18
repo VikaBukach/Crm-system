@@ -21,7 +21,7 @@ class PageController
         $pageModel = new PageModel();
         $pages = $pageModel->getAllPages();
 
-        include 'app/views/pages/index.php';
+        include 'app1/views/pages/index.php';
     }
 
     public function create()
@@ -31,7 +31,7 @@ class PageController
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
 
-        include 'app/views/pages/create.php';
+        include 'app1/views/pages/create.php';
     }
 
     public function store()
@@ -71,7 +71,7 @@ class PageController
             return;
         }
 
-        include 'app/views/pages/edit.php';
+        include 'app1/views/pages/edit.blade.php';
     }
 
     public function update($params)

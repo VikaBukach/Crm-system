@@ -47,7 +47,7 @@ ob_start();
 <?php $content = ob_get_clean();
 
 
-include 'app/views/layout.php';
+include 'app1/views/layout.php';
 ?>
 
 
