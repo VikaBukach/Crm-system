@@ -88,7 +88,7 @@ ob_start();
 
 <?php $content = ob_get_clean();
 
-include 'app1/views/layout.php';
+include 'app/views/layout.php';
 ?>
 
 

@@ -19,14 +19,14 @@ class RoleController
         $roleModel = new Role();
         $roles = $roleModel->getAllRoles();
 
-        include 'app1/views/roles/index.php';
+        include 'app/views/roles/index.php';
     }
 
     public function create()
     {
 //        $this->check->requirePermission();
 
-        include 'app1/views/roles/create.php';
+        include 'app/views/roles/create.php';
     }
 
     public function store()
@@ -61,7 +61,7 @@ class RoleController
             return;
         }
 
-        include 'app1/views/roles/edit.blade.php';
+        include 'app/views/roles/edit.blade.php';
     }
 
     public function update($params)

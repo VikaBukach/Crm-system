@@ -26,14 +26,14 @@ class ShortLinkController {
        $short_links = $this->ShortLinkModel->getAllShortLinksByIdUser($this->userId);
        $domain = $this->domain;
 
-        include 'app1/views/shortlink/index.php';
+        include 'app/views/shortlink/index.php';
     }
 
     public function create(){
         //this->check->requirePermission();
         $userId = $this->userId;
 
-        include 'app1/views/shortlink/create.php';
+        include 'app/views/shortlink/create.php';
     }
 
     public function store(){
@@ -145,7 +145,7 @@ class ShortLinkController {
             echo "Error: Short link don't found!";
             return;
         }
-        include 'app1/views/shortlink/edit.blade.php';
+        include 'app/views/shortlink/edit.blade.php';
     }
     public function update(){
         //this->check->requirePermission();
@@ -202,6 +202,6 @@ class ShortLinkController {
     public function information($params){
         $informations = $this->ShortLinkModel->getInformationAboutEveryClick($params['id']);
 
-        include 'app1/views/shortlink/information.php';
+        include 'app/views/shortlink/information.php';
     }
 }

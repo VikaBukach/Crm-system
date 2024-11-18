@@ -28,7 +28,7 @@ class HomeController
         $tasks = $taskmodel->getAllTasksByIdUser($user_id);
         $tasksJson = json_encode($tasks);
 
-        include 'app1/views/index.php';
+        include 'app/views/index.php';
     }
 
 }

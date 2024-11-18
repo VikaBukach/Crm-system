@@ -34,7 +34,7 @@ class TaskController
             $task['category'] = $categoryModel->getCategoryById($task['category_id']);
         }
 
-        include 'app1/views/todo/tasks/index.php';
+        include 'app/views/todo/tasks/index.php';
     }
     public function completed()
     {
@@ -52,7 +52,7 @@ class TaskController
             $task['category'] = $categoryModel->getCategoryById($task['category_id']);
         }
 
-        include 'app1/views/todo/tasks/completed.php';
+        include 'app/views/todo/tasks/completed.php';
     }
 
     public function expired()
@@ -70,7 +70,7 @@ class TaskController
             $task['tags'] = $this->tagsModel->getTagsByTaskId($task['id']);
             $task['category'] = $categoryModel->getCategoryById($task['category_id']);
         }
-        include 'app1/views/todo/tasks/expired.php';
+        include 'app/views/todo/tasks/expired.php';
     }
 
     public function create()
@@ -80,7 +80,7 @@ class TaskController
         $todoCategoryModel = new CategoryModel();
         $categories = $todoCategoryModel->getAllCategoriesWithUsability();
 
-        include 'app1/views/todo/tasks/create.php';
+        include 'app/views/todo/tasks/create.php';
     }
 
     public function store()
@@ -121,7 +121,7 @@ class TaskController
 
         if(!$task || $task['user_id'] != $user_id) {
             http_response_code(404);
-            include 'app1/views/errors/404.php';
+            include 'app/views/errors/404.php';
         }
 
         $todoCategoryModel = new CategoryModel();
@@ -134,7 +134,7 @@ class TaskController
 
         $tags = $this->tagsModel->getTagsByTaskId($task['id']);
 
-        include 'app1/views/todo/tasks/edit.blade.php';
+        include 'app/views/todo/tasks/edit.blade.php';
     }
 
     public function update()
@@ -246,7 +246,7 @@ public function tasksByTag($params)
         $task['category'] = $categoryModel->getCategoryById($task['category_id']);
     }
 
-    include 'app1/views/todo/tasks/by-tag.php';
+    include 'app/views/todo/tasks/by-tag.php';
 }
     public function updateStatus($params)
     {
@@ -278,7 +278,7 @@ public function tasksByTag($params)
 
         if(!$task || $task['user_id'] != $user_id) {
             http_response_code(404);
-            include 'app1/views/errors/404.php';
+            include 'app/views/errors/404.php';
         }
 
         $todoCategoryModel = new CategoryModel();
@@ -290,7 +290,7 @@ public function tasksByTag($params)
         }
         $tags = $this->tagsModel->getTagsByTaskId($task['id']);
 
-        include 'app1/views/todo/tasks/task.php';
+        include 'app/views/todo/tasks/task.php';
     }
 }
 
